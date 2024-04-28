@@ -1,0 +1,4 @@
+name: WhereAreYouGoing
+version: '${project.version}'
+main: fr.army.whereareyougoing.WhereAreYouGoing
+api-version: '1.20'
