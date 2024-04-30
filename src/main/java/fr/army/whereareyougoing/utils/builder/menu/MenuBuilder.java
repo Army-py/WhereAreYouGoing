@@ -8,6 +8,7 @@ import fr.army.whereareyougoing.menu.button.impl.BlankButton;
 import fr.army.whereareyougoing.menu.button.template.ButtonTemplate;
 import fr.army.whereareyougoing.menu.template.MenuTemplate;
 import fr.army.whereareyougoing.menu.view.AbstractMenuView;
+import fr.army.whereareyougoing.utils.loader.exception.UnableLoadConfigException;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
