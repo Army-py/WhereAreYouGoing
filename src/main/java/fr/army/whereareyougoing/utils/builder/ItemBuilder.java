@@ -2,12 +2,15 @@ package fr.army.whereareyougoing.utils.builder;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -95,6 +98,11 @@ public class ItemBuilder {
         meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
         meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        return this;
+    }
+
+    public ItemBuilder setPersistentData(@NotNull String key, @NotNull String value){
+        meta.getPersistentDataContainer().set(new NamespacedKey(WhereAreYouGoingPlugin.getPlugin(), key), PersistentDataType.STRING, value);
         return this;
     }
 
