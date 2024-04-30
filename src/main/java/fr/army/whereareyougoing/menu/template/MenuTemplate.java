@@ -2,6 +2,8 @@ package fr.army.whereareyougoing.menu.template;
 
 import fr.army.whereareyougoing.menu.CompassMenu;
 import fr.army.whereareyougoing.menu.button.Button;
+import fr.army.whereareyougoing.menu.button.ComponentButton;
+import fr.army.whereareyougoing.menu.button.template.ButtonTemplate;
 import fr.army.whereareyougoing.menu.view.AbstractMenuView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
