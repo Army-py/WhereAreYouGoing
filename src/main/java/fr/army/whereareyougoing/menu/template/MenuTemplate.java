@@ -39,9 +39,7 @@ public class MenuTemplate<T extends AbstractMenuView<T>> {
     }
 
     public void addButtons(Button<T>[] buttons){
-        for (int i = 0; i < buttons.length; i++) {
-            this.buttons[i] = buttons[i];
-        }
+        System.arraycopy(buttons, 0, this.buttons, 0, buttons.length);
     }
 
 //    public void mapButton(int slot, Button<T> button) {
