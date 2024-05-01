@@ -1,5 +1,7 @@
 
 
+clear-inventory-on-join: true
+
 destination-selector:
   material: COMPASS
   name: "§6Destination Selector"

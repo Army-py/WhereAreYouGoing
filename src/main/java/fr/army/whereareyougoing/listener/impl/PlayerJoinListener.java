@@ -7,6 +7,7 @@ import fr.army.whereareyougoing.utils.builder.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
@@ -20,14 +21,16 @@ public class PlayerJoinListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         final Inventory inventory = player.getInventory();
 
+        if (Config.clearInventoryOnJoin){
+            inventory.clear();
+        }
+
         final DestinationSelector destinationSelector = Config.destinationSelector;
-
         inventory.setItem(4, destinationSelector.getButtonItem());
-
     }
 }

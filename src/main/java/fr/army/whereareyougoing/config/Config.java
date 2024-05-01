@@ -16,6 +16,7 @@ public class Config {
     private final WhereAreYouGoingPlugin plugin;
     private final YamlConfiguration config;
 
+    public static boolean clearInventoryOnJoin;
     public static DestinationSelector destinationSelector;
 
     public Config(WhereAreYouGoingPlugin plugin, YamlConfiguration config) {
@@ -24,6 +25,8 @@ public class Config {
     }
 
     public void load(){
+        clearInventoryOnJoin = config.getBoolean("clear-inventory-on-join", true);
+
         final ConfigurationSection selectorSection = Objects.requireNonNull(
                 config.getConfigurationSection("destination-selector"),
                 "Unable to load destination-selector section"
