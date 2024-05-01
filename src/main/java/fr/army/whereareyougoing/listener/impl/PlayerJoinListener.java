@@ -1,6 +1,8 @@
 package fr.army.whereareyougoing.listener.impl;
 
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
+import fr.army.whereareyougoing.config.Config;
+import fr.army.whereareyougoing.selector.DestinationSelector;
 import fr.army.whereareyougoing.utils.builder.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,12 +25,9 @@ public class PlayerJoinListener implements Listener {
         final Player player = event.getPlayer();
         final Inventory inventory = player.getInventory();
 
-        final ItemStack item = new ItemBuilder(Material.COMPASS)
-                .setDisplayName("§6Menu")
-                .setGlow(true)
-                .buildItem();
+        final DestinationSelector destinationSelector = Config.destinationSelector;
 
-        inventory.setItem(4, item);
+        inventory.setItem(4, destinationSelector.getButtonItem());
 
     }
 }

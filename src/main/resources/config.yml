@@ -1,0 +1,10 @@
+
+
+destination-selector:
+  material: COMPASS
+  name: "§6Destination Selector"
+  skull-texture: ""
+  amount: 1
+  is-glowing: true
+  lore: []
+
