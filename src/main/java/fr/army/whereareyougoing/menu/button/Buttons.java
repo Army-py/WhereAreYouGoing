@@ -1,6 +1,7 @@
 package fr.army.whereareyougoing.menu.button;
 
 import fr.army.whereareyougoing.menu.button.impl.BlankButton;
+import fr.army.whereareyougoing.menu.button.impl.CloseButton;
 import fr.army.whereareyougoing.menu.button.template.ButtonTemplate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -10,6 +11,7 @@ import java.util.function.Function;
 public enum Buttons {
 
     BUTTON_BLANK(BlankButton::new),
+    BUTTON_CLOSE(CloseButton::new),
     ;
 
     private final Function<ButtonTemplate, Button<?>> buttonSupplier;
