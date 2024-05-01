@@ -4,6 +4,7 @@ import fr.army.whereareyougoing.utils.builder.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ public class ButtonItem {
     private List<String> lore;
     private boolean glow;
     private String skullTexture;
+
+    private String identifier = null;
+
 
     public ButtonItem(Material material, String name, int amount, List<String> lore, boolean glow, String skullTexture) {
         this.material = material;
@@ -49,6 +53,11 @@ public class ButtonItem {
         return skullTexture;
     }
 
+    @Nullable
+    public String getIdentifier() {
+        return identifier;
+    }
+
     public ButtonItem setMaterial(@NotNull Material material) {
         this.material = material;
         return this;
@@ -79,13 +88,22 @@ public class ButtonItem {
         return this;
     }
 
+    public ButtonItem setIdentifier(@NotNull String identifier) {
+        this.identifier = identifier;
+        return this;
+    }
+
     public ItemStack build(){
-        return new ItemBuilder(material)
+        final ItemBuilder itemBuilder = new ItemBuilder(material)
             .setDisplayName(name)
             .setAmount(amount)
             .setLore(lore)
             .setGlow(glow)
-            .setSkullTexture(skullTexture)
-            .buildItem();
+            .setSkullTexture(skullTexture);
+
+        if (identifier != null)
+            itemBuilder.setPersistentData("identifier", identifier);
+
+        return itemBuilder.buildItem();
     }
 }
