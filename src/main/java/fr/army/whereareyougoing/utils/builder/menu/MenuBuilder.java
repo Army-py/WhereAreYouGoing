@@ -10,6 +10,7 @@ import fr.army.whereareyougoing.menu.template.MenuTemplate;
 import fr.army.whereareyougoing.menu.view.AbstractMenuView;
 import fr.army.whereareyougoing.utils.loader.exception.UnableLoadConfigException;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
@@ -71,8 +72,13 @@ public class MenuBuilder {
                 final String skullTexture = config.getString(path + "skull-texture", null);
 
                 final ButtonItem buttonItem = new ButtonItem(Material.valueOf(material), name, amount, lore, glow, skullTexture);
+
+                final ConfigurationSection metadataSection = config.getConfigurationSection(path + "metadata");
+                if (metadataSection != null) {
+                    metadataSection.getKeys(false).forEach(key -> buttonItem.putMetadata(key, metadataSection.getString(key)));
+                }
+
                 final ButtonTemplate buttonTemplate = new ButtonTemplate(character, buttonItem);
-//                final BlankButton<T> button = new BlankButton<>(buttonTemplate);
                 final Button<?> button = buttonType.createButton(buttonTemplate);
                 buttons.add(button);
                 size++;

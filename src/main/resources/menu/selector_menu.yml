@@ -6,9 +6,50 @@ previous: false
 
 pattern:
   - ". . . . . . . . ."
-  - ". . . . . . . . ."
+  - ". . % . . . # . ."
   - ". . . . . . . . ."
   - ". . . . . . . . ."
   - ". . . . . . . . ."
 
-items: []
+
+# Available button types
+# Any other type of button will be considered BLANK
+# - CLOSE
+# - SERVER_SELECTOR
+items:
+  ".":
+    button-type: BLANK
+    material: LIGHT_BLUE_STAINED_GLASS_PANE
+    name: " "
+    skull-texture: ""
+    amount: 1
+    is-glowing: false
+    lore: []
+  "%":
+    button-type: SERVER_SELECTOR
+    material: DIAMOND_PICKAXE
+    name: "§5§nServer A"
+    skull-texture: ""
+    amount: 1
+    is-glowing: false
+    lore: []
+    meta:
+      server: "redirect_server_name"
+  "#":
+    button-type: SERVER_SELECTOR
+    material: DIAMOND_PICKAXE
+    name: "§5§nServer B"
+    skull-texture: ""
+    amount: 1
+    is-glowing: false
+    lore: []
+    meta:
+      server: "redirect_server_name"
+  "*":
+    button-type: CLOSE
+    material: ARROW
+    name: "§cFermer"
+    skull-texture: ""
+    amount: 1
+    is-glowing: false
+    lore: []
