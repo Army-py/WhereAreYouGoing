@@ -1,6 +1,7 @@
 package fr.army.whereareyougoing;
 
 import fr.army.whereareyougoing.config.Config;
+import fr.army.whereareyougoing.listener.ListenerLoader;
 import fr.army.whereareyougoing.utils.loader.ConfigLoader;
 import fr.army.whereareyougoing.utils.loader.exception.UnableLoadConfigException;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,6 +26,9 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+
+        final ListenerLoader listenerLoader = new ListenerLoader();
+        listenerLoader.registerListeners(this);
 
         getLogger().info("WhereAreYouGoingPlugin enabled");
     }

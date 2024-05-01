@@ -1,11 +1,14 @@
 package fr.army.whereareyougoing.listener.impl;
 
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
+import fr.army.whereareyougoing.utils.builder.ItemBuilder;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerJoinListener implements Listener {
 
@@ -15,11 +18,17 @@ public class PlayerJoinListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         final Inventory inventory = player.getInventory();
 
-        // inventory.setItem();
+        final ItemStack item = new ItemBuilder(Material.COMPASS)
+                .setDisplayName("§6Menu")
+                .setGlow(true)
+                .buildItem();
+
+        inventory.setItem(4, item);
+
     }
 }

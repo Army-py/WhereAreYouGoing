@@ -1,4 +1,5 @@
 name: WhereAreYouGoing
+author: Army_
 version: '${project.version}'
-main: fr.army.whereareyougoing.WhereAreYouGoing
+main: fr.army.whereareyougoing.WhereAreYouGoingPlugin
 api-version: '1.20'
