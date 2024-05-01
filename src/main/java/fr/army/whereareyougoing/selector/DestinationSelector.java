@@ -12,15 +12,21 @@ public class DestinationSelector {
     public static final String SELECTOR_IDENTIFIER = "wayg_destination_selector";
 
     private final ButtonItem buttonItem;
+    private final int slot;
 
-    public DestinationSelector(ButtonItem buttonItem){
+    public DestinationSelector(ButtonItem buttonItem, int slot){
         this.buttonItem = buttonItem;
+        this.slot = slot;
     }
 
     public ItemStack getButtonItem(){
         return buttonItem
                 .setIdentifier(SELECTOR_IDENTIFIER)
                 .build();
+    }
+
+    public int getSlot() {
+        return slot;
     }
 
     public static boolean isDestinationSelector(ItemStack item){

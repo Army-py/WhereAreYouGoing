@@ -3,6 +3,7 @@
 clear-inventory-on-join: true
 
 destination-selector:
+  slot: 0
   material: COMPASS
   name: "§6Destination Selector"
   skull-texture: ""
