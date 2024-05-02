@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
@@ -32,6 +33,7 @@ public class SelectorListener implements Listener {
     @EventHandler
     public void onSelectorInteract(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
+        if (event.getAction().name().contains("LEFT")) return;
 
         final ItemStack item = event.getItem();
 
@@ -52,6 +54,18 @@ public class SelectorListener implements Listener {
         final ItemStack item = event.getCurrentItem();
 
         if (item == null) return;
+        if (item.getItemMeta() == null) return;
+        if (item.getItemMeta().getPersistentDataContainer().isEmpty()) return;
+
+        if (DestinationSelector.isDestinationSelector(item)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        final ItemStack item = event.getItemDrop().getItemStack();
+
         if (item.getItemMeta() == null) return;
         if (item.getItemMeta().getPersistentDataContainer().isEmpty()) return;
 
