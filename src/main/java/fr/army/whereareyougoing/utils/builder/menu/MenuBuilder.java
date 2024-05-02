@@ -73,7 +73,7 @@ public class MenuBuilder {
 
                 final ButtonItem buttonItem = new ButtonItem(Material.valueOf(material), name, amount, lore, glow, skullTexture);
 
-                final ConfigurationSection metadataSection = config.getConfigurationSection(path + "metadata");
+                final ConfigurationSection metadataSection = config.getConfigurationSection(path + "meta");
                 if (metadataSection != null) {
                     metadataSection.getKeys(false).forEach(key -> buttonItem.putMetadata(key, metadataSection.getString(key)));
                 }

@@ -4,18 +4,23 @@ import fr.army.whereareyougoing.config.Config;
 import fr.army.whereareyougoing.listener.ListenerLoader;
 import fr.army.whereareyougoing.menu.Menus;
 import fr.army.whereareyougoing.utils.loader.ConfigLoader;
+import fr.army.whereareyougoing.utils.network.channel.ChannelRegistry;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
     public static WhereAreYouGoingPlugin plugin;
 
+    private ChannelRegistry channelRegistry;
     private ConfigLoader configLoader;
     private Config config;
 
     @Override
     public void onEnable() {
         plugin = this;
+
+        channelRegistry = new ChannelRegistry();
+        channelRegistry.register(this);
 
         this.configLoader = new ConfigLoader(this);
 
@@ -39,6 +44,8 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+
+        channelRegistry.unregister(this);
 
         getLogger().info("WhereAreYouGoingPlugin disabled");
     }

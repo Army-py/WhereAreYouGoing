@@ -24,8 +24,6 @@ public abstract class WAYGMenu<T extends AbstractMenuView<T>> {
         final Button<T> button = menuTemplate.getButton(slot);
 
         button.onClick(clickEvent);
-
-        clickEvent.setCancelled(true);
     }
 
 
