@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ButtonItem {
@@ -17,6 +18,7 @@ public class ButtonItem {
     private boolean glow;
     private String skullTexture;
 
+    private HashMap<String, String> metadata = new HashMap<>();
     private String identifier = null;
 
 
@@ -58,6 +60,10 @@ public class ButtonItem {
         return identifier;
     }
 
+    public HashMap<String, String> getMetadata() {
+        return metadata;
+    }
+
     public ButtonItem setMaterial(@NotNull Material material) {
         this.material = material;
         return this;
@@ -90,6 +96,12 @@ public class ButtonItem {
 
     public ButtonItem setIdentifier(@NotNull String identifier) {
         this.identifier = identifier;
+        return this;
+    }
+
+    public ButtonItem putMetadata(@NotNull String key, @Nullable String value) {
+        if (value == null) return this;
+        metadata.put(key, value);
         return this;
     }
 

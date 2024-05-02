@@ -1,6 +1,6 @@
 package fr.army.whereareyougoing.menu.template;
 
-import fr.army.whereareyougoing.menu.CompassMenu;
+import fr.army.whereareyougoing.menu.WAYGMenu;
 import fr.army.whereareyougoing.menu.button.Button;
 import fr.army.whereareyougoing.menu.button.ComponentButton;
 import fr.army.whereareyougoing.menu.button.template.ButtonTemplate;
@@ -18,7 +18,7 @@ public class MenuTemplate<T extends AbstractMenuView<T>> {
     private final int size;
     private final Button<T>[] buttons;
 
-    private CompassMenu<T> precedingMenu;
+    private WAYGMenu<T> precedingMenu;
 
     public MenuTemplate(@NotNull String title, boolean precede, int size) {
         this.title = title;
@@ -39,9 +39,7 @@ public class MenuTemplate<T extends AbstractMenuView<T>> {
     }
 
     public void addButtons(Button<T>[] buttons){
-        for (int i = 0; i < buttons.length; i++) {
-            this.buttons[i] = buttons[i];
-        }
+        System.arraycopy(buttons, 0, this.buttons, 0, buttons.length);
     }
 
 //    public void mapButton(int slot, Button<T> button) {
@@ -109,11 +107,11 @@ public class MenuTemplate<T extends AbstractMenuView<T>> {
     }
 
     @Nullable
-    public CompassMenu<T> getPrecedingMenu() {
+    public WAYGMenu<T> getPrecedingMenu() {
         return precedingMenu;
     }
 
-    public void setPrecedingMenu(@NotNull CompassMenu<T> precedingMenu) {
+    public void setPrecedingMenu(@NotNull WAYGMenu<T> precedingMenu) {
         this.precedingMenu = precedingMenu;
     }
 }

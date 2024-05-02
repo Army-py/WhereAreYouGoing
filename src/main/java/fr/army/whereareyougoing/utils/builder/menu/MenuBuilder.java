@@ -10,6 +10,7 @@ import fr.army.whereareyougoing.menu.template.MenuTemplate;
 import fr.army.whereareyougoing.menu.view.AbstractMenuView;
 import fr.army.whereareyougoing.utils.loader.exception.UnableLoadConfigException;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +31,7 @@ public class MenuBuilder {
     @NotNull
     public <T extends AbstractMenuView<T>> MenuBuilderResult<T> loadMenu(@NotNull String configName) {
         try {
-            return buildMenu(plugin.getConfigLoader().initFile("menus/" + configName));
+            return buildMenu(plugin.getConfigLoader().initFile("menu/" + configName));
         } catch (UnableLoadConfigException e) {
             return buildEmptyMenu();
         }
@@ -56,19 +57,28 @@ public class MenuBuilder {
                 final char character = line.charAt(column);
 
                 final String path = "items." + character + ".";
+                if (!config.contains(path)) {
+                    plugin.getLogger().severe("Unable to load item for character " + character + " in menu " + config.getName());
+                    return buildEmptyMenu();
+                }
 
                 final boolean pageComponent = config.getBoolean(path + "page-component");
-                final Buttons buttonType = Buttons.getButtonType(config.getString(path + "button-type"), pageComponent);
-                final String material = config.getString(path + "material");
-                final String name = config.getString(path + "name");
-                final int amount = config.getInt(path + "amount");
+                final Buttons buttonType = Buttons.getButtonType(config.getString(path + "button-type", null), pageComponent);
+                final String material = config.getString(path + "material", "AIR");
+                final String name = config.getString(path + "name", " ");
+                final int amount = config.getInt(path + "amount", 1);
                 final List<String> lore = config.getStringList(path + "lore");
                 final boolean glow = config.getBoolean(path + "is-glowing");
-                final String skullTexture = config.getString(path + "skull-texture");
+                final String skullTexture = config.getString(path + "skull-texture", null);
 
                 final ButtonItem buttonItem = new ButtonItem(Material.valueOf(material), name, amount, lore, glow, skullTexture);
+
+                final ConfigurationSection metadataSection = config.getConfigurationSection(path + "meta");
+                if (metadataSection != null) {
+                    metadataSection.getKeys(false).forEach(key -> buttonItem.putMetadata(key, metadataSection.getString(key)));
+                }
+
                 final ButtonTemplate buttonTemplate = new ButtonTemplate(character, buttonItem);
-//                final BlankButton<T> button = new BlankButton<>(buttonTemplate);
                 final Button<?> button = buttonType.createButton(buttonTemplate);
                 buttons.add(button);
                 size++;
@@ -83,7 +93,7 @@ public class MenuBuilder {
 
     private <T extends AbstractMenuView<T>> MenuBuilderResult<T> buildEmptyMenu(){
         final MenuTemplate<T> menuTemplate = new MenuTemplate<>("Empty", false, 9);
-        final ButtonItem buttonItem = new ButtonItem(Material.valueOf("AIR"), " ", 1, Collections.emptyList(), false, null);
+        final ButtonItem buttonItem = new ButtonItem(Material.valueOf("AIR"), "empty", 1, Collections.emptyList(), false, null);
         final ButtonTemplate buttonTemplate = new ButtonTemplate('!', buttonItem);
         final BlankButton button = new BlankButton(buttonTemplate);
 

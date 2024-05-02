@@ -1,6 +1,6 @@
 package fr.army.whereareyougoing.menu.view.impl;
 
-import fr.army.whereareyougoing.menu.CompassMenu;
+import fr.army.whereareyougoing.menu.WAYGMenu;
 import fr.army.whereareyougoing.menu.button.Button;
 import fr.army.whereareyougoing.menu.template.MenuTemplate;
 import fr.army.whereareyougoing.menu.view.AbstractMenuView;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class MenuView extends AbstractMenuView<MenuView> {
 
-    public MenuView(Player player, CompassMenu<MenuView> menu) {
+    public MenuView(Player player, WAYGMenu<MenuView> menu) {
         super(player, menu);
     }
 

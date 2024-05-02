@@ -28,12 +28,6 @@ public class ItemBuilder {
         this.meta = this.item.getItemMeta();
     }
 
-    public ItemBuilder(@NotNull ItemStack item){
-        this.item = new ItemStack(item);
-        this.meta = this.item.getItemMeta();
-    }
-
-
     public ItemBuilder setMaterial(@NotNull Material material){
         this.item.setType(material);
         return this;
@@ -45,11 +39,13 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setDisplayName(@Nullable String displayName){
+        if (meta == null) return this;
         meta.setDisplayName(displayName);
         return this;
     }
 
     public ItemBuilder setLore(@Nullable List<String> lore){
+        if (meta == null) return this;
         if (lore != null && !lore.isEmpty()) {
             meta.setLore(lore);
         }
@@ -57,6 +53,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setGlow(boolean isGlow){
+        if (meta == null) return this;
         if (!isGlow) return this;
         meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -64,6 +61,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setSkullTexture(@Nullable String texture){
+        if (meta == null) return this;
         if (texture == null || texture.isBlank()) return this;
         GameProfile profile = new GameProfile(toUUID(texture), (String) null);
         profile.getProperties().put("textures", new Property("textures", texture));
