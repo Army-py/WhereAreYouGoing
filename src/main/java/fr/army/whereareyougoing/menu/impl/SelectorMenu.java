@@ -19,10 +19,6 @@ public class SelectorMenu extends WAYGMenu<MenuView> {
         return new MenuView(player, this);
     }
 
-    @Override
-    public void onClick(InventoryClickEvent clickEvent) {
-    }
-
     public static SelectorMenu createInstance(String configName){
         final MenuBuilderResult<MenuView> builderResult = MenuBuilder.getInstance().loadMenu(configName + ".yml");
         return new SelectorMenu(builderResult);
