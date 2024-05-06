@@ -7,6 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -17,7 +18,8 @@ public class Config {
 
     public static boolean clearInventoryOnJoin;
     public static DestinationSelector destinationSelector;
-    public static Map<String, Integer> serversMaxPlayers;
+    public static Map<String, Integer> serversMaxPlayers = new HashMap<>();
+    public static int checkServerCountInterval;
 
     public Config(YamlConfiguration config) {
         this.config = config;
@@ -37,6 +39,8 @@ public class Config {
                 "Unable to load servers-max-players section"
         );
         getServersMaxPlayers(serversSection);
+
+        checkServerCountInterval = config.getInt("check-server-count-interval", 20);
     }
 
     private void getDestinationSelector(@NotNull ConfigurationSection section){
