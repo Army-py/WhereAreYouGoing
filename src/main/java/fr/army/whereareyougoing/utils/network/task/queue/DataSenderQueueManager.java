@@ -18,39 +18,6 @@ public class DataSenderQueueManager {
 
     private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    // static {
-    //     startService();
-    // }
-
-    public static void startService() {
-        executorService.submit(() -> {
-            while (!Thread.currentThread().isInterrupted()) {
-                pauseLock.lock();
-                try {
-                    while (isPaused) {
-                        unpaused.await();
-                    }
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    break;
-                } finally {
-                    pauseLock.unlock();
-                }
-
-                try {
-                    DataSenderTask task = taskQueue.take();
-                    if (isPaused){
-                        taskQueue.put(task);
-                        continue;
-                    }
-                    task.run();
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-        });
-    }
-
     public static void processSingleTask() {
         pauseLock.lock();
         try {
@@ -71,15 +38,6 @@ public class DataSenderQueueManager {
         taskQueue.put(task);
     }
 
-    public static void pause() {
-        pauseLock.lock();
-        try {
-            isPaused = true;
-        } finally {
-            pauseLock.unlock();
-        }
-    }
-
     public static void resume() {
         pauseLock.lock();
         try {
@@ -95,7 +53,7 @@ public class DataSenderQueueManager {
         taskQueue.clear();
     }
 
-    public static boolean isPaused() {
-        return isPaused;
+    public static boolean isEmpty() {
+        return taskQueue.isEmpty();
     }
 }

@@ -4,8 +4,9 @@ import fr.army.whereareyougoing.utils.network.packet.impl.PlayerCountPacket;
 import fr.army.whereareyougoing.utils.network.task.sender.AsyncDataSender;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
-public class TaskCounterSender implements Runnable {
+public class TaskCounterSender extends BukkitRunnable {
 
     private final String serverName;
 

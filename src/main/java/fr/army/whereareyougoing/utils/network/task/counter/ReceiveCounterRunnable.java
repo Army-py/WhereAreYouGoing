@@ -37,8 +37,16 @@ public class ReceiveCounterRunnable implements Runnable {
         final Map<String, Integer> serversMaxPlayers = Config.serversMaxPlayers;
         if (!serversMaxPlayers.containsKey(serverName)) return;
 
+        final TaskCounterManager taskCounterManager = plugin.getTaskCounterManager();
+
         if (serverPlayerCount < serversMaxPlayers.get(serverName)){
             DataSenderQueueManager.processSingleTask();
+
+            if (DataSenderQueueManager.isEmpty())
+                taskCounterManager.stopTaskCounterChecker();
+        }else{
+            if (taskCounterManager.isEmpty())
+                taskCounterManager.startTaskCounterChecker();
         }
     }
 }
