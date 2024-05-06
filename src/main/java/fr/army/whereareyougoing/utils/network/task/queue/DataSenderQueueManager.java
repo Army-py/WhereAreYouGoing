@@ -18,9 +18,9 @@ public class DataSenderQueueManager {
 
     private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    static {
-        startService();
-    }
+    // static {
+    //     startService();
+    // }
 
     public static void startService() {
         executorService.submit(() -> {
@@ -49,6 +49,22 @@ public class DataSenderQueueManager {
                 }
             }
         });
+    }
+
+    public static void processSingleTask() {
+        pauseLock.lock();
+        try {
+            if (!taskQueue.isEmpty()) {
+                DataSenderTask task = taskQueue.take();
+                task.run();
+            }
+            isPaused = true;
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(e);
+        } finally {
+            pauseLock.unlock();
+        }
     }
 
     public static void enqueueTask(DataSenderTask task) throws InterruptedException {
