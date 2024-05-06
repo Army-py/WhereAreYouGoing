@@ -1,9 +1,12 @@
 package fr.army.whereareyougoing.utils.network.task.counter;
 
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
+import fr.army.whereareyougoing.config.Config;
 import fr.army.whereareyougoing.utils.network.player.counter.PlayerCount;
 import fr.army.whereareyougoing.utils.network.player.counter.PlayerCountReader;
 import fr.army.whereareyougoing.utils.network.task.queue.DataSenderQueueManager;
+
+import java.util.Map;
 
 public class ReceiveCounterRunnable implements Runnable {
 
@@ -21,8 +24,14 @@ public class ReceiveCounterRunnable implements Runnable {
 
         try {
             final PlayerCount playerCount = orderReader.write(data);
+            final String serverName = playerCount.serverName();
+            final int serverPlayerCount = playerCount.playerCount();
 
-            if (playerCount.playerCount() < 60)
+            final Map<String, Integer> serversMaxPlayers = Config.serversMaxPlayers;
+
+            if (!serversMaxPlayers.containsKey(serverName)) return;
+
+            if (serverPlayerCount < serversMaxPlayers.get(serverName))
                 DataSenderQueueManager.processSingleTask();
 
         } catch (Exception e) {

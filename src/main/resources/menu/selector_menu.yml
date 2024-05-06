@@ -34,7 +34,7 @@ items:
     is-glowing: false
     lore: []
     meta:
-      server: "redirect_server_name"
+      server: "redirect_server_name-a"
   "#":
     button-type: SERVER_SELECTOR
     material: DIAMOND_PICKAXE
@@ -44,7 +44,7 @@ items:
     is-glowing: false
     lore: []
     meta:
-      server: "redirect_server_name"
+      server: "redirect_server_name-b"
   "*":
     button-type: CLOSE
     material: ARROW
