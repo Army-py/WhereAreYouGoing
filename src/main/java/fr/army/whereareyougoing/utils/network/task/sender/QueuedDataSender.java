@@ -1,12 +1,12 @@
 package fr.army.whereareyougoing.utils.network.task.sender;
 
-import fr.army.whereareyougoing.utils.network.packet.impl.PlayerSenderPacket;
+import fr.army.whereareyougoing.utils.network.packet.PlayerPacket;
 import fr.army.whereareyougoing.utils.network.task.queue.DataSenderQueueManager;
 import fr.army.whereareyougoing.utils.network.task.queue.DataSenderTask;
 
 public class QueuedDataSender {
 
-    public void sendPluginMessage(PlayerSenderPacket packet) {
+    public void sendPluginMessage(PlayerPacket packet) {
         try {
             final DataSenderTask task = new DataSenderTask(
                     new AsyncDataSender(),

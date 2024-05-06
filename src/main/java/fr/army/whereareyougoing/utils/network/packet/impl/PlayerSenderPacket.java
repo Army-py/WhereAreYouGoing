@@ -1,7 +1,7 @@
 package fr.army.whereareyougoing.utils.network.packet.impl;
 
 import fr.army.whereareyougoing.utils.network.packet.PlayerPacket;
-import fr.army.whereareyougoing.utils.network.player.PlayerSenderWriter;
+import fr.army.whereareyougoing.utils.network.player.sender.PlayerSenderWriter;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
