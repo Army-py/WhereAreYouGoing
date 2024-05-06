@@ -6,6 +6,7 @@ import fr.army.whereareyougoing.utils.network.player.counter.PlayerCount;
 import fr.army.whereareyougoing.utils.network.player.counter.PlayerCountReader;
 import fr.army.whereareyougoing.utils.network.task.queue.DataSenderQueueManager;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class ReceiveCounterRunnable implements Runnable {
@@ -22,20 +23,22 @@ public class ReceiveCounterRunnable implements Runnable {
     public void run() {
         final PlayerCountReader orderReader = new PlayerCountReader();
 
+        final PlayerCount playerCount;
+
         try {
-            final PlayerCount playerCount = orderReader.write(data);
-            final String serverName = playerCount.serverName();
-            final int serverPlayerCount = playerCount.playerCount();
+            playerCount = orderReader.write(data);
+        } catch (IOException e) {
+            return;
+        }
 
-            final Map<String, Integer> serversMaxPlayers = Config.serversMaxPlayers;
+        final String serverName = playerCount.serverName();
+        final int serverPlayerCount = playerCount.playerCount();
 
-            if (!serversMaxPlayers.containsKey(serverName)) return;
+        final Map<String, Integer> serversMaxPlayers = Config.serversMaxPlayers;
+        if (!serversMaxPlayers.containsKey(serverName)) return;
 
-            if (serverPlayerCount < serversMaxPlayers.get(serverName))
-                DataSenderQueueManager.processSingleTask();
-
-        } catch (Exception e) {
-            plugin.getLogger().severe("Error while reading player count data");
+        if (serverPlayerCount < serversMaxPlayers.get(serverName)){
+            DataSenderQueueManager.processSingleTask();
         }
     }
 }
