@@ -1,7 +1,8 @@
 
-
+# Clear players inventory when they join the server
 clear-inventory-on-join: true
 
+# The item that will open the destination selector menu
 destination-selector:
   slot: 4
   material: COMPASS
@@ -11,3 +12,12 @@ destination-selector:
   is-glowing: true
   lore: []
 
+# The maximum amount of players that can be on a server
+servers-max-players:
+  redirect_server_name-a: 60
+  redirect_server_name-b: 60
+
+# The amount of time in seconds between each check for the amount of players on a server
+# Time in ticks
+# 20 ticks = 1 second
+check-server-count-interval: 100

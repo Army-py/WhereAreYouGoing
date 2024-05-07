@@ -7,7 +7,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Config {
@@ -16,6 +18,8 @@ public class Config {
 
     public static boolean clearInventoryOnJoin;
     public static DestinationSelector destinationSelector;
+    public static Map<String, Integer> serversMaxPlayers = new HashMap<>();
+    public static int checkServerCountInterval;
 
     public Config(YamlConfiguration config) {
         this.config = config;
@@ -28,10 +32,18 @@ public class Config {
                 config.getConfigurationSection("destination-selector"),
                 "Unable to load destination-selector section"
         );
-        destinationSelector = getDestinationSelector(selectorSection);
+        getDestinationSelector(selectorSection);
+
+        final ConfigurationSection serversSection = Objects.requireNonNull(
+                config.getConfigurationSection("servers-max-players"),
+                "Unable to load servers-max-players section"
+        );
+        getServersMaxPlayers(serversSection);
+
+        checkServerCountInterval = config.getInt("check-server-count-interval", 20);
     }
 
-    private DestinationSelector getDestinationSelector(@NotNull ConfigurationSection section){
+    private void getDestinationSelector(@NotNull ConfigurationSection section){
         final int slot = section.getInt("slot", 4);
         final Material material = Material.getMaterial(section.getString("material", "STONE"));
         final String name = section.getString("name", "Default name");
@@ -40,9 +52,15 @@ public class Config {
         final boolean glow = section.getBoolean("is-glowing", false);
         final List<String> lore = section.getStringList("lore");
 
-        return new DestinationSelector(
+        destinationSelector = new DestinationSelector(
                 new ButtonItem(material, name, amount, lore, glow, skullTexture),
                 slot
         );
+    }
+
+    private void getServersMaxPlayers(@NotNull ConfigurationSection section){
+        for (String server : section.getKeys(false)) {
+            serversMaxPlayers.put(server, section.getInt(server));
+        }
     }
 }
