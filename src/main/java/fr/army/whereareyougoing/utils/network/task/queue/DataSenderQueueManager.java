@@ -8,8 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class DataSenderQueueManager {
 
-    private static final int QUEUE_CAPACITY = 99;
-    private static final BlockingQueue<DataSenderTask> taskQueue = new LinkedBlockingQueue<>(QUEUE_CAPACITY);
+    private static final BlockingQueue<DataSenderTask> taskQueue = new LinkedBlockingQueue<>();
 
     private static final ReentrantLock pauseLock = new ReentrantLock();
 
