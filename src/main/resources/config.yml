@@ -14,8 +14,8 @@ destination-selector:
 
 # The maximum amount of players that can be on a server
 servers-max-players:
-  redirect_server_name-a: 60
-  redirect_server_name-b: 60
+  server_name-a: 60
+  server_name-b: 60
 
 # The amount of time in seconds between each check for the amount of players on a server
 # Time in ticks
