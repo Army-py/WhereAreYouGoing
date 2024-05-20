@@ -15,12 +15,12 @@ destination-selector:
 servers:
   redirect_server_name-a:
     max-players: 60
-    max-protocol-version: 47
-    min-protocol-version: 47
+    max-protocol-version: 47 # Can be commented out if you want to allow all versions
+    min-protocol-version: 47 # Can be commented out if you want to allow all versions
   redirect_server_name-b:
     max-players: 60
-    max-protocol-version: 47
-    min-protocol-version: 47
+    max-protocol-version: 47 # Can be commented out if you want to allow all versions
+    min-protocol-version: 47 # Can be commented out if you want to allow all versions
 
 # The amount of time in seconds between each check for the amount of players on a server
 # Time in ticks

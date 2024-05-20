@@ -62,8 +62,8 @@ public class Config {
             final DestinationServer destServer = new DestinationServer(
                     serverName,
                     section.getInt(serverName + ".max-players", 0),
-                    section.getInt(serverName + ".max-protocol-version", 0),
-                    section.getInt(serverName + ".min-protocol-version", 0)
+                    section.getInt(serverName + ".max-protocol-version", Integer.MAX_VALUE),
+                    section.getInt(serverName + ".min-protocol-version", -1)
             );
             servers.put(serverName, destServer);
         }
