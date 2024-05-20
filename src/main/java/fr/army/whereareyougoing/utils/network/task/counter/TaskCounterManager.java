@@ -2,6 +2,7 @@ package fr.army.whereareyougoing.utils.network.task.counter;
 
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import fr.army.whereareyougoing.config.Config;
+import fr.army.whereareyougoing.config.DestinationServer;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -20,10 +21,10 @@ public class TaskCounterManager {
     }
 
     public void startTaskCounterChecker() {
-        final Map<String, Integer> serversMaxPlayers = Config.serversMaxPlayers;
+        final Map<String, DestinationServer> destinationServers = Config.servers;
         final int checkInterval = Config.checkServerCountInterval;
 
-        serversMaxPlayers.forEach((serverName, maxPlayers) -> {
+        destinationServers.forEach((serverName, destServer) -> {
             final TaskCounterSender taskCounterSender = new TaskCounterSender(serverName);
             tasks.add(taskCounterSender);
             taskCounterSender.runTaskTimerAsynchronously(plugin, checkInterval, checkInterval);

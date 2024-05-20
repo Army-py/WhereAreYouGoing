@@ -17,7 +17,7 @@ public class Config {
 
     public static boolean clearInventoryOnJoin;
     public static DestinationSelector destinationSelector;
-    public static Map<String, Integer> serversMaxPlayers = new HashMap<>();
+    public static Map<String, DestinationServer> servers = new HashMap<>();
     public static int checkServerCountInterval;
 
     public Config(YamlConfiguration config) {
@@ -34,10 +34,10 @@ public class Config {
         getDestinationSelector(selectorSection);
 
         final ConfigurationSection serversSection = Objects.requireNonNull(
-                config.getConfigurationSection("servers-max-players"),
+                config.getConfigurationSection("servers"),
                 "Unable to load servers-max-players section"
         );
-        getServersMaxPlayers(serversSection);
+        getDestinationServers(serversSection);
 
         checkServerCountInterval = config.getInt("check-server-count-interval", 20);
     }
@@ -57,9 +57,15 @@ public class Config {
         );
     }
 
-    private void getServersMaxPlayers(@NotNull ConfigurationSection section){
-        for (String server : section.getKeys(false)) {
-            serversMaxPlayers.put(server, section.getInt(server));
+    private void getDestinationServers(@NotNull ConfigurationSection section){
+        for (String serverName : section.getKeys(false)) {
+            final DestinationServer destServer = new DestinationServer(
+                    serverName,
+                    section.getInt(serverName + ".max-players", 0),
+                    section.getInt(serverName + ".max-protocol-version", 0),
+                    section.getInt(serverName + ".min-protocol-version", 0)
+            );
+            servers.put(serverName, destServer);
         }
     }
 }
