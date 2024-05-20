@@ -1,7 +1,6 @@
 package fr.army.whereareyougoing.config;
 
 import fr.army.whereareyougoing.menu.button.ButtonItem;
-import fr.army.whereareyougoing.selector.DestinationSelector;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
