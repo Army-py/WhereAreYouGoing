@@ -1,5 +1,9 @@
 package fr.army.whereareyougoing.menu.button.impl;
 
+import com.viaversion.viaversion.api.Via;
+import com.viaversion.viaversion.api.ViaAPI;
+import fr.army.whereareyougoing.config.Config;
+import fr.army.whereareyougoing.config.DestinationServer;
 import fr.army.whereareyougoing.menu.button.Button;
 import fr.army.whereareyougoing.menu.button.template.ButtonTemplate;
 import fr.army.whereareyougoing.menu.view.AbstractMenuView;
@@ -14,8 +18,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class ServerSelectorButton extends Button<MenuView> {
 
+    private final ViaAPI<?> viaAPI;
+
     public ServerSelectorButton(ButtonTemplate buttonTemplate) {
         super(buttonTemplate);
+
+        this.viaAPI = Via.getAPI();
     }
 
     @Override
@@ -24,6 +32,14 @@ public class ServerSelectorButton extends Button<MenuView> {
         final String serverName = buttonTemplate.getButtonItem().getMetadata().get("server");
 
         if (serverName == null) return;
+
+        final DestinationServer destinationServer = Config.servers.get(serverName);
+
+        if (viaAPI.getPlayerVersion(player.getUniqueId()) < destinationServer.getMinProtocolVersion() ||
+                viaAPI.getPlayerVersion(player.getUniqueId()) > destinationServer.getMaxProtocolVersion()) {
+            player.sendMessage("§cYou are not allowed to join this server");
+            return;
+        }
 
         final QueuedDataSender queuedDataSender = new QueuedDataSender();
         final AsyncDataSender asyncDataSender = new AsyncDataSender();
