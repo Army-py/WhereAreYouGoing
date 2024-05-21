@@ -1,7 +1,7 @@
 package fr.army.whereareyougoing.utils.network.task.counter;
 
 import fr.army.whereareyougoing.utils.network.packet.impl.PlayerCountPacket;
-import fr.army.whereareyougoing.utils.network.task.sender.AsyncDataSender;
+import fr.army.whereareyougoing.utils.network.task.data.AsyncDataSender;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
