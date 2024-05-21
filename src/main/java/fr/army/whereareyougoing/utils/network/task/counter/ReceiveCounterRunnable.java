@@ -4,7 +4,8 @@ import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import fr.army.whereareyougoing.config.Config;
 import fr.army.whereareyougoing.utils.network.player.counter.PlayerCount;
 import fr.army.whereareyougoing.utils.network.player.counter.PlayerCountReader;
-import fr.army.whereareyougoing.utils.network.task.queue.DataSenderQueueManager;
+import fr.army.whereareyougoing.utils.network.task.queue.PlayerSenderQueueManager;
+import fr.army.whereareyougoing.utils.network.task.sender.TaskSenderManager;
 
 import java.io.IOException;
 import java.util.Map;
@@ -38,15 +39,18 @@ public class ReceiveCounterRunnable implements Runnable {
         if (!serversMaxPlayers.containsKey(serverName)) return;
 
         final TaskCounterManager taskCounterManager = plugin.getTaskCounterManager();
+        final TaskSenderManager taskSenderManager = plugin.getTaskSenderManager();
+        final PlayerSenderQueueManager playerSender = taskSenderManager.getPlayerSenderQueueManager(serverName);
 
         if (serverPlayerCount < serversMaxPlayers.get(serverName)){
-            DataSenderQueueManager.processSingleTask();
+            playerSender.processSingleTask();
 
-            if (DataSenderQueueManager.isEmpty())
+            if (playerSender.isEmpty())
                 taskCounterManager.stopTaskCounterChecker();
         }else{
             if (taskCounterManager.isEmpty())
                 taskCounterManager.startTaskCounterChecker();
         }
+        playerSender.refreshPositionIndicator();
     }
 }
