@@ -49,3 +49,15 @@ servers:
 # Time in ticks
 # 20 ticks = 1 second
 check-server-count-interval: 100
+
+waiting-list-indicator:
+  # The title of the boss bar
+  title: "Position {POSITION}"
+
+  # The color of the boss bar
+  # Possible values: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/boss/BarColor.html#enum-constant-summary
+  color: "GREEN"
+
+  # The style of the boss bar
+  # Possible values: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/boss/BarStyle.html#enum-constant-summary
+  style: "SOLID"
