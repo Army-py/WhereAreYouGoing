@@ -8,6 +8,7 @@ import fr.army.whereareyougoing.menu.Menus;
 import fr.army.whereareyougoing.utils.loader.ConfigLoader;
 import fr.army.whereareyougoing.utils.network.channel.ChannelRegistry;
 import fr.army.whereareyougoing.utils.network.task.counter.TaskCounterManager;
+import fr.army.whereareyougoing.utils.network.task.sender.TaskSenderManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class WhereAreYouGoingPlugin extends JavaPlugin {
@@ -17,6 +18,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
     private ChannelRegistry channelRegistry;
     private ConfigLoader configLoader;
     private Config config;
+    private TaskSenderManager taskSenderManager;
     private TaskCounterManager taskCounterManager;
 
     @Override
@@ -42,6 +44,9 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
         final ListenerLoader listenerLoader = new ListenerLoader();
         listenerLoader.registerListeners(this);
+
+        taskSenderManager = new TaskSenderManager(this);
+        taskSenderManager.startTasksSender();
 
         taskCounterManager = new TaskCounterManager(this);
         taskCounterManager.startTaskCounterChecker();
@@ -71,8 +76,13 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
         return configLoader;
     }
 
+
     public Config getConfiguration() {
         return config;
+    }
+
+    public TaskSenderManager getTaskSenderManager() {
+        return taskSenderManager;
     }
 
     public TaskCounterManager getTaskCounterManager() {
