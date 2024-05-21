@@ -3,6 +3,8 @@ package fr.army.whereareyougoing.config;
 import fr.army.whereareyougoing.menu.button.ButtonItem;
 import fr.army.whereareyougoing.selector.DestinationSelector;
 import org.bukkit.Material;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +22,7 @@ public class Config {
     public static DestinationSelector destinationSelector;
     public static Map<String, Integer> serversMaxPlayers = new HashMap<>();
     public static int checkServerCountInterval;
+    public static WaitingDestinationIndicator waitingDestinationIndicator;
 
     public Config(YamlConfiguration config) {
         this.config = config;
@@ -41,6 +44,12 @@ public class Config {
         getServersMaxPlayers(serversSection);
 
         checkServerCountInterval = config.getInt("check-server-count-interval", 20);
+
+        final ConfigurationSection waitingDestinationIndicatorSection = Objects.requireNonNull(
+                config.getConfigurationSection("waiting-destination-indicator"),
+                "Unable to load waiting-destination-indicator section"
+        );
+        getWaitingDestinationIndicator(waitingDestinationIndicatorSection);
     }
 
     private void getDestinationSelector(@NotNull ConfigurationSection section){
@@ -62,5 +71,17 @@ public class Config {
         for (String server : section.getKeys(false)) {
             serversMaxPlayers.put(server, section.getInt(server));
         }
+    }
+
+    private void getWaitingDestinationIndicator(@NotNull ConfigurationSection section){
+        final String title = section.getString("title", "Default title");
+        final String configColor = section.getString("color", "WHITE");
+        final String configStyle = section.getString("style", "SOLID");
+
+        waitingDestinationIndicator = new WaitingDestinationIndicator(
+                title,
+                BarColor.valueOf(configColor),
+                BarStyle.valueOf(configStyle)
+        );
     }
 }
