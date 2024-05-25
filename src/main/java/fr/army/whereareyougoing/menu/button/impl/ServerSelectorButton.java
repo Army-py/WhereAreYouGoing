@@ -1,7 +1,7 @@
 package fr.army.whereareyougoing.menu.button.impl;
 
-import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
+import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import fr.army.whereareyougoing.config.Config;
 import fr.army.whereareyougoing.config.DestinationServer;
 import fr.army.whereareyougoing.menu.button.Button;
@@ -23,7 +23,7 @@ public class ServerSelectorButton extends Button<MenuView> {
     public ServerSelectorButton(ButtonTemplate buttonTemplate) {
         super(buttonTemplate);
 
-        this.viaAPI = Via.getAPI();
+        this.viaAPI = WhereAreYouGoingPlugin.getPlugin().getViaAPI();
     }
 
     @Override
