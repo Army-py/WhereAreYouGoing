@@ -31,10 +31,10 @@ protocol-version:
     title:
       enabled: true
       title: "§cUnsupported version"
-      subTitle: "§cPlease use 1.20 ."
-      fadeIn: 20
+      sub-title: "§cPlease use 1.20 ."
+      fade-in: 20
       stay: 60
-      fadeOut: 20
+      fade-out: 20
   min:
     message:
       enabled: true
@@ -42,10 +42,10 @@ protocol-version:
     title:
       enabled: true
       title: "§cUnsupported version"
-      subTitle: "§cPlease use 1.20 ."
-      fadeIn: 20
+      sub-title: "§cPlease use 1.20 ."
+      fade-in: 20
       stay: 60
-      fadeOut: 20
+      fade-out: 20
 
 # The amount of time in seconds between each check for the amount of players on a server
 # Time in ticks
