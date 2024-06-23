@@ -32,7 +32,11 @@ public class TaskCounterManager {
     }
 
     public void stopTaskCounterChecker() {
-        tasks.forEach(BukkitRunnable::cancel);
+        for (BukkitRunnable task : tasks) {
+            if (task != null) {
+                task.cancel();
+            }
+        }
         tasks.clear();
     }
 

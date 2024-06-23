@@ -2,9 +2,7 @@ package fr.army.whereareyougoing.menu.button.impl;
 
 import com.viaversion.viaversion.api.ViaAPI;
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
-import fr.army.whereareyougoing.config.Config;
-import fr.army.whereareyougoing.config.DestinationProtocol;
-import fr.army.whereareyougoing.config.DestinationServer;
+import fr.army.whereareyougoing.config.*;
 import fr.army.whereareyougoing.menu.button.Button;
 import fr.army.whereareyougoing.menu.button.template.ButtonTemplate;
 import fr.army.whereareyougoing.menu.view.AbstractMenuView;
@@ -37,10 +35,22 @@ public class ServerSelectorButton extends Button<MenuView> {
         final DestinationServer destinationServer = Config.servers.get(serverName);
         final DestinationProtocol destinationProtocol = destinationServer.getDestinationProtocol();
 
-        System.out.println(viaAPI);
         if (viaAPI.getPlayerVersion(player.getUniqueId()) < destinationProtocol.minProtocolVersion() ||
                 viaAPI.getPlayerVersion(player.getUniqueId()) > destinationProtocol.maxProtocolVersion()) {
-            player.sendMessage("§cYou are not allowed to join this server");
+
+            final ProtocolVersionMessage protocolVersionMessage = destinationProtocol.protocolVersionMessage();
+            final ProtocolVersionTitle protocolVersionTitle = destinationProtocol.protocolVersionTitle();
+            if (protocolVersionMessage.enabled())
+                player.sendMessage(protocolVersionMessage.content());
+            if (protocolVersionTitle.enabled())
+                player.sendTitle(
+                        protocolVersionTitle.title(),
+                        protocolVersionTitle.subtitle(),
+                        protocolVersionTitle.fadeIn(),
+                        protocolVersionTitle.stay(),
+                        protocolVersionTitle.fadeOut()
+                );
+            player.closeInventory();
             return;
         }
 

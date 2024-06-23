@@ -18,7 +18,6 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
     private ConfigLoader configLoader;
     private Config config;
     private TaskCounterManager taskCounterManager;
-    private ViaAPI<?> viaAPI;
 
     @Override
     public void onEnable() {
@@ -47,13 +46,11 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
         taskCounterManager = new TaskCounterManager(this);
         taskCounterManager.startTaskCounterChecker();
 
-        this.viaAPI = Via.getAPI();
-        if (viaAPI == null) {
+        if (Via.getAPI() == null) {
             getLogger().severe("ViaVersion is not installed");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        System.out.println(viaAPI);
 
         getLogger().info("WhereAreYouGoingPlugin enabled");
     }

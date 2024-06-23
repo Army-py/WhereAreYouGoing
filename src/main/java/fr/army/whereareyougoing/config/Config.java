@@ -86,8 +86,9 @@ public class Config {
                     protocolVersionTitleSection.getInt("fade-out", 20)
             );
 
+            final int maxProtocolVersion = protocolVersionSection.getInt("max-protocol", Integer.MAX_VALUE);
             final DestinationProtocol destProtocol = new DestinationProtocol(
-                    protocolVersionSection.getInt("max-protocol", -1),
+                    maxProtocolVersion == -1 ? Integer.MAX_VALUE : maxProtocolVersion,
                     protocolVersionSection.getInt("min-protocol", -1),
                     protocolVersionMessage,
                     protocolVersionTitle
