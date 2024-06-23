@@ -3,6 +3,7 @@ package fr.army.whereareyougoing.menu.button.impl;
 import com.viaversion.viaversion.api.ViaAPI;
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import fr.army.whereareyougoing.config.Config;
+import fr.army.whereareyougoing.config.DestinationProtocol;
 import fr.army.whereareyougoing.config.DestinationServer;
 import fr.army.whereareyougoing.menu.button.Button;
 import fr.army.whereareyougoing.menu.button.template.ButtonTemplate;
@@ -34,9 +35,11 @@ public class ServerSelectorButton extends Button<MenuView> {
         if (serverName == null) return;
 
         final DestinationServer destinationServer = Config.servers.get(serverName);
+        final DestinationProtocol destinationProtocol = destinationServer.getDestinationProtocol();
 
-        if (viaAPI.getPlayerVersion(player.getUniqueId()) < destinationServer.getMinProtocolVersion() ||
-                viaAPI.getPlayerVersion(player.getUniqueId()) > destinationServer.getMaxProtocolVersion()) {
+        System.out.println(viaAPI);
+        if (viaAPI.getPlayerVersion(player.getUniqueId()) < destinationProtocol.minProtocolVersion() ||
+                viaAPI.getPlayerVersion(player.getUniqueId()) > destinationProtocol.maxProtocolVersion()) {
             player.sendMessage("§cYou are not allowed to join this server");
             return;
         }

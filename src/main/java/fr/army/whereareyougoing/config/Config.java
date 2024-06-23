@@ -59,11 +59,45 @@ public class Config {
 
     private void getDestinationServers(@NotNull ConfigurationSection section){
         for (String serverName : section.getKeys(false)) {
+            final ConfigurationSection protocolVersionSection = Objects.requireNonNull(
+                    section.getConfigurationSection(serverName + ".protocol-version"),
+                    "Unable to load protocol-version section"
+            );
+
+            final ConfigurationSection protocolVersionMessageSection = Objects.requireNonNull(
+                    protocolVersionSection.getConfigurationSection("message"),
+                    "Unable to load protocol-version message section"
+            );
+            final ProtocolVersionMessage protocolVersionMessage = new ProtocolVersionMessage(
+                    protocolVersionMessageSection.getBoolean("enabled", false),
+                    protocolVersionMessageSection.getString("content", "Default content")
+            );
+
+            final ConfigurationSection protocolVersionTitleSection = Objects.requireNonNull(
+                    protocolVersionSection.getConfigurationSection("title"),
+                    "Unable to load protocol-version title section"
+            );
+            final ProtocolVersionTitle protocolVersionTitle = new ProtocolVersionTitle(
+                    protocolVersionTitleSection.getBoolean("enabled", false),
+                    protocolVersionTitleSection.getString("title", "Default title"),
+                    protocolVersionTitleSection.getString("sub-title", "Default subtitle"),
+                    protocolVersionTitleSection.getInt("fade-in", 20),
+                    protocolVersionTitleSection.getInt("stay", 60),
+                    protocolVersionTitleSection.getInt("fade-out", 20)
+            );
+
+            final DestinationProtocol destProtocol = new DestinationProtocol(
+                    protocolVersionSection.getInt("max-protocol", -1),
+                    protocolVersionSection.getInt("min-protocol", -1),
+                    protocolVersionMessage,
+                    protocolVersionTitle
+            );
+            System.out.println(destProtocol);
+
             final DestinationServer destServer = new DestinationServer(
                     serverName,
                     section.getInt(serverName + ".max-players", 0),
-                    section.getInt(serverName + ".max-protocol-version", Integer.MAX_VALUE),
-                    section.getInt(serverName + ".min-protocol-version", -1)
+                    destProtocol
             );
             servers.put(serverName, destServer);
         }

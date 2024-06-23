@@ -48,6 +48,12 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
         taskCounterManager.startTaskCounterChecker();
 
         this.viaAPI = Via.getAPI();
+        if (viaAPI == null) {
+            getLogger().severe("ViaVersion is not installed");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        System.out.println(viaAPI);
 
         getLogger().info("WhereAreYouGoingPlugin enabled");
     }
@@ -77,6 +83,6 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
     }
 
     public ViaAPI<?> getViaAPI() {
-        return viaAPI;
+        return Via.getAPI();
     }
 }
