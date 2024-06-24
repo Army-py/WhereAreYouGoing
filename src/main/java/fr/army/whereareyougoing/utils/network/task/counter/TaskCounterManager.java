@@ -5,20 +5,18 @@ import fr.army.whereareyougoing.config.Config;
 import fr.army.whereareyougoing.config.DestinationServer;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class TaskCounterManager {
 
     private final WhereAreYouGoingPlugin plugin;
 
-    private final List<BukkitRunnable> tasks;
+    private final Map<String, BukkitRunnable> tasks;
 
     public TaskCounterManager(WhereAreYouGoingPlugin plugin) {
         this.plugin = plugin;
-        this.tasks = new ArrayList<>();
+        this.tasks = new HashMap<>();
     }
 
     public void startTaskCounterChecker() {
@@ -27,14 +25,18 @@ public class TaskCounterManager {
 
         destinationServers.forEach((serverName, destServer) -> {
             final TaskCounterSender taskCounterSender = new TaskCounterSender(serverName);
-            tasks.add(taskCounterSender);
+            tasks.put(serverName, taskCounterSender);
             taskCounterSender.runTaskTimerAsynchronously(plugin, checkInterval, checkInterval);
         });
     }
 
     public void stopTaskCounterChecker() {
-        tasks.removeIf(Objects::nonNull);
-        tasks.clear();
+        Map<String, BukkitRunnable> tasksCopy = new HashMap<>(tasks);
+
+        tasksCopy.forEach((serverName, task) -> {
+            task.cancel();
+            tasks.remove(serverName);
+        });
     }
 
     public boolean isEmpty() {
