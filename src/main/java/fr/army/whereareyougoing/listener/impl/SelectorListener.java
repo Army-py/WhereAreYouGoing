@@ -2,7 +2,7 @@ package fr.army.whereareyougoing.listener.impl;
 
 import fr.army.whereareyougoing.config.Config;
 import fr.army.whereareyougoing.menu.Menus;
-import fr.army.whereareyougoing.selector.DestinationSelector;
+import fr.army.whereareyougoing.config.DestinationSelector;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

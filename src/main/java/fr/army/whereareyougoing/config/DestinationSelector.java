@@ -1,4 +1,4 @@
-package fr.army.whereareyougoing.selector;
+package fr.army.whereareyougoing.config;
 
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import fr.army.whereareyougoing.menu.button.ButtonItem;

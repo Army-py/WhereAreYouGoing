@@ -1,7 +1,6 @@
 package fr.army.whereareyougoing.config;
 
 import fr.army.whereareyougoing.menu.button.ButtonItem;
-import fr.army.whereareyougoing.selector.DestinationSelector;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -18,7 +17,7 @@ public class Config {
 
     public static boolean clearInventoryOnJoin;
     public static DestinationSelector destinationSelector;
-    public static Map<String, Integer> serversMaxPlayers = new HashMap<>();
+    public static Map<String, DestinationServer> servers = new HashMap<>();
     public static int checkServerCountInterval;
 
     public Config(YamlConfiguration config) {
@@ -35,10 +34,10 @@ public class Config {
         getDestinationSelector(selectorSection);
 
         final ConfigurationSection serversSection = Objects.requireNonNull(
-                config.getConfigurationSection("servers-max-players"),
+                config.getConfigurationSection("servers"),
                 "Unable to load servers-max-players section"
         );
-        getServersMaxPlayers(serversSection);
+        getDestinationServers(serversSection);
 
         checkServerCountInterval = config.getInt("check-server-count-interval", 20);
     }
@@ -58,9 +57,50 @@ public class Config {
         );
     }
 
-    private void getServersMaxPlayers(@NotNull ConfigurationSection section){
-        for (String server : section.getKeys(false)) {
-            serversMaxPlayers.put(server, section.getInt(server));
+    private void getDestinationServers(@NotNull ConfigurationSection section){
+        for (String serverName : section.getKeys(false)) {
+            final ConfigurationSection protocolVersionSection = Objects.requireNonNull(
+                    section.getConfigurationSection(serverName + ".protocol-version"),
+                    "Unable to load protocol-version section"
+            );
+
+            final ConfigurationSection protocolVersionMessageSection = Objects.requireNonNull(
+                    protocolVersionSection.getConfigurationSection("message"),
+                    "Unable to load protocol-version message section"
+            );
+            final ProtocolVersionMessage protocolVersionMessage = new ProtocolVersionMessage(
+                    protocolVersionMessageSection.getBoolean("enabled", false),
+                    protocolVersionMessageSection.getString("content", "Default content")
+            );
+
+            final ConfigurationSection protocolVersionTitleSection = Objects.requireNonNull(
+                    protocolVersionSection.getConfigurationSection("title"),
+                    "Unable to load protocol-version title section"
+            );
+            final ProtocolVersionTitle protocolVersionTitle = new ProtocolVersionTitle(
+                    protocolVersionTitleSection.getBoolean("enabled", false),
+                    protocolVersionTitleSection.getString("title", "Default title"),
+                    protocolVersionTitleSection.getString("sub-title", "Default subtitle"),
+                    protocolVersionTitleSection.getInt("fade-in", 20),
+                    protocolVersionTitleSection.getInt("stay", 60),
+                    protocolVersionTitleSection.getInt("fade-out", 20)
+            );
+
+            final int maxProtocolVersion = protocolVersionSection.getInt("max-protocol", Integer.MAX_VALUE);
+            final DestinationProtocol destProtocol = new DestinationProtocol(
+                    maxProtocolVersion == -1 ? Integer.MAX_VALUE : maxProtocolVersion,
+                    protocolVersionSection.getInt("min-protocol", -1),
+                    protocolVersionMessage,
+                    protocolVersionTitle
+            );
+            System.out.println(destProtocol);
+
+            final DestinationServer destServer = new DestinationServer(
+                    serverName,
+                    section.getInt(serverName + ".max-players", 0),
+                    destProtocol
+            );
+            servers.put(serverName, destServer);
         }
     }
 }

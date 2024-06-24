@@ -1,5 +1,8 @@
 package fr.army.whereareyougoing.menu.button.impl;
 
+import com.viaversion.viaversion.api.ViaAPI;
+import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
+import fr.army.whereareyougoing.config.*;
 import fr.army.whereareyougoing.menu.button.Button;
 import fr.army.whereareyougoing.menu.button.template.ButtonTemplate;
 import fr.army.whereareyougoing.menu.view.AbstractMenuView;
@@ -14,8 +17,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class ServerSelectorButton extends Button<MenuView> {
 
+    private final ViaAPI<?> viaAPI;
+
     public ServerSelectorButton(ButtonTemplate buttonTemplate) {
         super(buttonTemplate);
+
+        this.viaAPI = WhereAreYouGoingPlugin.getPlugin().getViaAPI();
     }
 
     @Override
@@ -24,6 +31,28 @@ public class ServerSelectorButton extends Button<MenuView> {
         final String serverName = buttonTemplate.getButtonItem().getMetadata().get("server");
 
         if (serverName == null) return;
+
+        final DestinationServer destinationServer = Config.servers.get(serverName);
+        final DestinationProtocol destinationProtocol = destinationServer.getDestinationProtocol();
+
+        if (viaAPI.getPlayerVersion(player.getUniqueId()) < destinationProtocol.minProtocolVersion() ||
+                viaAPI.getPlayerVersion(player.getUniqueId()) > destinationProtocol.maxProtocolVersion()) {
+
+            final ProtocolVersionMessage protocolVersionMessage = destinationProtocol.protocolVersionMessage();
+            final ProtocolVersionTitle protocolVersionTitle = destinationProtocol.protocolVersionTitle();
+            if (protocolVersionMessage.enabled())
+                player.sendMessage(protocolVersionMessage.content());
+            if (protocolVersionTitle.enabled())
+                player.sendTitle(
+                        protocolVersionTitle.title(),
+                        protocolVersionTitle.subtitle(),
+                        protocolVersionTitle.fadeIn(),
+                        protocolVersionTitle.stay(),
+                        protocolVersionTitle.fadeOut()
+                );
+            player.closeInventory();
+            return;
+        }
 
         final QueuedDataSender queuedDataSender = new QueuedDataSender();
         final AsyncDataSender asyncDataSender = new AsyncDataSender();

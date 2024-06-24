@@ -1,5 +1,7 @@
 package fr.army.whereareyougoing;
 
+import com.viaversion.viaversion.api.Via;
+import com.viaversion.viaversion.api.ViaAPI;
 import fr.army.whereareyougoing.config.Config;
 import fr.army.whereareyougoing.listener.ListenerLoader;
 import fr.army.whereareyougoing.menu.Menus;
@@ -44,6 +46,12 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
         taskCounterManager = new TaskCounterManager(this);
         taskCounterManager.startTaskCounterChecker();
 
+        if (Via.getAPI() == null) {
+            getLogger().severe("ViaVersion is not installed");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
         getLogger().info("WhereAreYouGoingPlugin enabled");
     }
 
@@ -69,5 +77,9 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
     public TaskCounterManager getTaskCounterManager() {
         return taskCounterManager;
+    }
+
+    public ViaAPI<?> getViaAPI() {
+        return Via.getAPI();
     }
 }

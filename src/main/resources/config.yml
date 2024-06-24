@@ -12,12 +12,40 @@ destination-selector:
   is-glowing: true
   lore: []
 
-# The maximum amount of players that can be on a server
-servers-max-players:
-  redirect_server_name-a: 60
-  redirect_server_name-b: 60
+servers:
+  redirect-server-name-a:
+    max-players: 60
+    protocol-version:
+        max-protocol: 47 # -1 to disable
+        min-protocol: 47 # -1 to disable
+        message:
+          enabled: true
+          content: "§cYou are using an unsupported version of Minecraft. Please use 1.20 ."
+        title:
+          enabled: true
+          title: "§cUnsupported version"
+          sub-title: "§cPlease use 1.20 ."
+          fade-in: 20
+          stay: 60
+          fade-out: 20
+  redirect-server-name-b:
+    max-players: 60
+    protocol-version:
+        max-protocol: 47 # -1 to disable
+        min-protocol: 47 # -1 to disable
+        message:
+          enabled: true
+          content: "§cYou are using an unsupported version of Minecraft. Please use 1.20 ."
+        title:
+          enabled: true
+          title: "§cUnsupported version"
+          sub-title: "§cPlease use 1.20 ."
+          fade-in: 20
+          stay: 60
+          fade-out: 20
 
-# The amount of time in seconds between each check for the amount of players on a server
+
+# The amount of time in ticks between each check for the amount of players on a server
 # Time in ticks
 # 20 ticks = 1 second
 check-server-count-interval: 100
