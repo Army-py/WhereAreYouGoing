@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class TaskCounterManager {
 
@@ -32,11 +33,7 @@ public class TaskCounterManager {
     }
 
     public void stopTaskCounterChecker() {
-        for (BukkitRunnable task : tasks) {
-            if (task != null) {
-                task.cancel();
-            }
-        }
+        tasks.removeIf(Objects::nonNull);
         tasks.clear();
     }
 
