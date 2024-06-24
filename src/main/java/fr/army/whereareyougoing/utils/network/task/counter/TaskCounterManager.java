@@ -5,8 +5,9 @@ import fr.army.whereareyougoing.config.Config;
 import fr.army.whereareyougoing.config.DestinationServer;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TaskCounterManager {
 
@@ -16,7 +17,7 @@ public class TaskCounterManager {
 
     public TaskCounterManager(WhereAreYouGoingPlugin plugin) {
         this.plugin = plugin;
-        this.tasks = new HashMap<>();
+        this.tasks = new ConcurrentHashMap<>();
     }
 
     public void startTaskCounterChecker() {
@@ -31,12 +32,13 @@ public class TaskCounterManager {
     }
 
     public void stopTaskCounterChecker() {
-        Map<String, BukkitRunnable> tasksCopy = new HashMap<>(tasks);
+        Iterator<Map.Entry<String, BukkitRunnable>> iterator = tasks.entrySet().iterator();
 
-        tasksCopy.forEach((serverName, task) -> {
-            task.cancel();
-            tasks.remove(serverName);
-        });
+        while (iterator.hasNext()) {
+            Map.Entry<String, BukkitRunnable> entry = iterator.next();
+            entry.getValue().cancel();
+            iterator.remove();
+        }
     }
 
     public boolean isEmpty() {

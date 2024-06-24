@@ -35,6 +35,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
             this.config.load();
         } catch (Exception e) {
             getLogger().severe("Unable to load config.yml");
+            getLogger().severe(e.getMessage());
             getServer().getPluginManager().disablePlugin(this);
             return;
         }

@@ -45,7 +45,7 @@ public class Config {
         checkServerCountInterval = config.getInt("check-server-count-interval", 20);
 
         final ConfigurationSection waitingDestinationIndicatorSection = Objects.requireNonNull(
-                config.getConfigurationSection("waiting-destination-indicator"),
+                config.getConfigurationSection("waiting-list-indicator"),
                 "Unable to load waiting-destination-indicator section"
         );
         getWaitingDestinationIndicator(waitingDestinationIndicatorSection);

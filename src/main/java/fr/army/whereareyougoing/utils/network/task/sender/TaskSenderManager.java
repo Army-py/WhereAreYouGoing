@@ -19,7 +19,7 @@ public class TaskSenderManager {
     }
 
     public void startTasksSender() {
-        final Set<String> servers = Config.serversMaxPlayers.keySet();
+        final Set<String> servers = Config.servers.keySet();
 
         servers.forEach(server -> {
             final PlayerSenderQueueManager playerSenderQueueManager = new PlayerSenderQueueManager();
