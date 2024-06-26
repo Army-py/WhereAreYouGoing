@@ -55,7 +55,7 @@ public class ReceiveCounterRunnable implements Runnable {
             }
         }else{
             if (taskCounterManager.isEmpty()) {
-                taskCounterManager.startTaskCounterChecker();
+                taskCounterManager.startTaskCounterChecker(serverName);
                 System.out.println("Task counter started");
             }
         }
