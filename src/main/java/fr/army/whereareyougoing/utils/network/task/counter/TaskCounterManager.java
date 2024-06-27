@@ -19,17 +19,6 @@ public class TaskCounterManager {
         this.tasks = new ConcurrentHashMap<>();
     }
 
-    public void startTaskCounterChecker() {
-        final Map<String, DestinationServer> destinationServers = Config.servers;
-        final int checkInterval = Config.checkServerCountInterval;
-
-        destinationServers.forEach((serverName, destServer) -> {
-            final TaskCounterSender taskCounterSender = new TaskCounterSender(serverName);
-            tasks.put(serverName, taskCounterSender);
-            taskCounterSender.runTaskTimerAsynchronously(plugin, checkInterval, checkInterval);
-        });
-    }
-
     public void startTaskCounterChecker(String serverName) {
         final int checkInterval = Config.checkServerCountInterval;
 

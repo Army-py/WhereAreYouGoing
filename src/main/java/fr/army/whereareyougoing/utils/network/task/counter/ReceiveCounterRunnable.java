@@ -43,20 +43,15 @@ public class ReceiveCounterRunnable implements Runnable {
         final TaskSenderManager taskSenderManager = plugin.getTaskSenderManager();
         final PlayerSenderQueueManager playerSender = taskSenderManager.getPlayerSenderQueueManager(serverName);
 
-        System.out.println("Server: " + serverName + " - Players: " + serverPlayerCount);
-        // System.out.println(destinationServers.get(serverName).getMaxPlayers());
         if (serverPlayerCount < destinationServers.get(serverName).getMaxPlayers()){
-            System.out.println("Server: " + serverName + " - Players: " + serverPlayerCount + " - Max: " + destinationServers.get(serverName).getMaxPlayers() + " - Sending task");
             playerSender.processSingleTask();
 
             if (playerSender.isEmpty()){
                 taskCounterManager.stopTaskCounterChecker(serverName);
-                System.out.println("Task counter stopped");
             }
         }else{
             if (taskCounterManager.isEmpty()) {
                 taskCounterManager.startTaskCounterChecker(serverName);
-                System.out.println("Task counter started");
             }
         }
         playerSender.refreshPositionIndicator();

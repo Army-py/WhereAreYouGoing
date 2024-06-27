@@ -50,7 +50,6 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
         taskSenderManager.startTasksSender();
 
         taskCounterManager = new TaskCounterManager(this);
-        taskCounterManager.startTaskCounterChecker();
 
         if (Via.getAPI() == null) {
             getLogger().severe("ViaVersion is not installed");
