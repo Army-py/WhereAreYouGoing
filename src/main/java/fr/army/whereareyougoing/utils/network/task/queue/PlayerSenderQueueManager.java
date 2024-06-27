@@ -70,6 +70,8 @@ public class PlayerSenderQueueManager {
             final Player player = packet.getPlayer();
 
             final BossBar bossBar = Config.waitingDestinationIndicator.createBossBar(i + 1);
+            bossBar.setProgress(1.0 - (double) i / taskQueue.length);
+
             final BossBar retrievedBossBar;
             if ((retrievedBossBar = bossBars.get(player.getUniqueId())) != null) {
                 retrievedBossBar.removeAll();
