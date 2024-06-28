@@ -1,4 +1,4 @@
-package fr.army.whereareyougoing.utils.network.task.sender;
+package fr.army.whereareyougoing.utils.network.task.data;
 
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import fr.army.whereareyougoing.utils.network.packet.PlayerPacket;

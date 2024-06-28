@@ -5,8 +5,8 @@ import fr.army.whereareyougoing.config.Config;
 import fr.army.whereareyougoing.config.DestinationServer;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TaskCounterManager {
 
@@ -16,27 +16,23 @@ public class TaskCounterManager {
 
     public TaskCounterManager(WhereAreYouGoingPlugin plugin) {
         this.plugin = plugin;
-        this.tasks = new HashMap<>();
+        this.tasks = new ConcurrentHashMap<>();
     }
 
-    public void startTaskCounterChecker() {
-        final Map<String, DestinationServer> destinationServers = Config.servers;
+    public void startTaskCounterChecker(String serverName) {
         final int checkInterval = Config.checkServerCountInterval;
 
-        destinationServers.forEach((serverName, destServer) -> {
-            final TaskCounterSender taskCounterSender = new TaskCounterSender(serverName);
-            tasks.put(serverName, taskCounterSender);
-            taskCounterSender.runTaskTimerAsynchronously(plugin, checkInterval, checkInterval);
-        });
+        final TaskCounterSender taskCounterSender = new TaskCounterSender(serverName);
+        tasks.put(serverName, taskCounterSender);
+        taskCounterSender.runTaskTimerAsynchronously(plugin, checkInterval, checkInterval);
     }
 
-    public void stopTaskCounterChecker() {
-        Map<String, BukkitRunnable> tasksCopy = new HashMap<>(tasks);
-
-        tasksCopy.forEach((serverName, task) -> {
+    public void stopTaskCounterChecker(String serverName) {
+        final BukkitRunnable task = tasks.get(serverName);
+        if (task != null) {
             task.cancel();
             tasks.remove(serverName);
-        });
+        }
     }
 
     public boolean isEmpty() {
