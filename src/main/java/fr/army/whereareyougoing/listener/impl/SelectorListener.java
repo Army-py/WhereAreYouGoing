@@ -1,8 +1,9 @@
 package fr.army.whereareyougoing.listener.impl;
 
 import fr.army.whereareyougoing.config.Config;
-import fr.army.whereareyougoing.menu.Menus;
+import fr.army.whereareyougoing.config.DefaultSelectedSlot;
 import fr.army.whereareyougoing.config.DestinationSelector;
+import fr.army.whereareyougoing.menu.Menus;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,15 +13,15 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 public class SelectorListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-        final Inventory inventory = player.getInventory();
+        final PlayerInventory inventory = player.getInventory();
 
         if (Config.clearInventoryOnJoin){
             inventory.clear();
@@ -28,6 +29,11 @@ public class SelectorListener implements Listener {
 
         final DestinationSelector destinationSelector = Config.destinationSelector;
         inventory.setItem(destinationSelector.getSlot(), destinationSelector.getButtonItem());
+
+        final DefaultSelectedSlot defaultSelectedSlot = Config.defaultSelectedSlot;
+        if (defaultSelectedSlot.enabled()) {
+            inventory.setHeldItemSlot(defaultSelectedSlot.slot());
+        }
     }
 
     @EventHandler

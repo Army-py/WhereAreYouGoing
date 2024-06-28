@@ -2,6 +2,11 @@
 # Clear players inventory when they join the server
 clear-inventory-on-join: true
 
+# The default selected item slot when the player joins the server
+default-selected-item:
+  enabled: true
+  slot: 4 # Must be between 0 and 8
+
 # The item that will open the destination selector menu
 destination-selector:
   slot: 4

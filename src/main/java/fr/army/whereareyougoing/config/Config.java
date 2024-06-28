@@ -18,6 +18,7 @@ public class Config {
     private final YamlConfiguration config;
 
     public static boolean clearInventoryOnJoin;
+    public static DefaultSelectedSlot defaultSelectedSlot;
     public static DestinationSelector destinationSelector;
     public static Map<String, DestinationServer> servers = new HashMap<>();
     public static int checkServerCountInterval;
@@ -29,6 +30,12 @@ public class Config {
 
     public void load(){
         clearInventoryOnJoin = config.getBoolean("clear-inventory-on-join", true);
+
+        final ConfigurationSection defaultSelectedSlotSection = Objects.requireNonNull(
+                config.getConfigurationSection("default-selected-item"),
+                "Unable to load default-selected-slot section"
+        );
+        getDefaultSelectedSlot(defaultSelectedSlotSection);
 
         final ConfigurationSection selectorSection = Objects.requireNonNull(
                 config.getConfigurationSection("destination-selector"),
@@ -64,6 +71,15 @@ public class Config {
                 new ButtonItem(material, name, amount, lore, glow, skullTexture),
                 slot
         );
+    }
+
+    private void getDefaultSelectedSlot(@NotNull ConfigurationSection section){
+        final boolean enabled = section.getBoolean("enabled", false);
+        final int slot = section.getInt("slot", 0);
+        if (slot < 0 || slot > 8) {
+            throw new IllegalArgumentException("Invalid slot number");
+        }
+        defaultSelectedSlot = new DefaultSelectedSlot(enabled, slot);
     }
 
     private void getDestinationServers(@NotNull ConfigurationSection section){
