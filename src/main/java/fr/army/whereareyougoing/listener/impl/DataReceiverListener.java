@@ -18,8 +18,6 @@ public class DataReceiverListener implements PluginMessageListener {
     public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte @NotNull [] data) {
         if (!channel.equals("BungeeCord")) return;
 
-        System.out.println("Data received");
-
         final AsyncCounterReceiver asyncCounterReceiver = new AsyncCounterReceiver();
         asyncCounterReceiver.receiveCounter(plugin, data);
     }
