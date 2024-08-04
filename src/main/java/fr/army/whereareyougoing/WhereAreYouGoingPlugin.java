@@ -2,6 +2,7 @@ package fr.army.whereareyougoing;
 
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
+import fr.army.whereareyougoing.command.CommandManager;
 import fr.army.whereareyougoing.config.Config;
 import fr.army.whereareyougoing.database.EMFLoader;
 import fr.army.whereareyougoing.database.exception.impl.DatabaseConnectionException;
@@ -25,6 +26,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
     private TaskSenderManager taskSenderManager;
     private TaskCounterManager taskCounterManager;
     private EMFLoader emfLoader = null;
+    private CommandManager commandManager;
 
     @Override
     public void onEnable() {
@@ -75,6 +77,8 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
             return;
         }
 
+        commandManager = new CommandManager(this);
+
         getLogger().info("WhereAreYouGoingPlugin enabled");
     }
 
@@ -112,6 +116,10 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
     public TaskCounterManager getTaskCounterManager() {
         return taskCounterManager;
+    }
+
+    public EMFLoader getEMFLoader() {
+        return emfLoader;
     }
 
     public ViaAPI<?> getViaAPI() {
