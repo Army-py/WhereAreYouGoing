@@ -3,6 +3,7 @@ package fr.army.whereareyougoing;
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
 import fr.army.whereareyougoing.config.Config;
+import fr.army.whereareyougoing.library.LibrarySetup;
 import fr.army.whereareyougoing.listener.ListenerLoader;
 import fr.army.whereareyougoing.menu.Menus;
 import fr.army.whereareyougoing.utils.loader.ConfigLoader;
@@ -15,6 +16,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
     public static WhereAreYouGoingPlugin plugin;
 
+    private LibrarySetup librarySetup;
     private ChannelRegistry channelRegistry;
     private ConfigLoader configLoader;
     private Config config;
@@ -24,6 +26,9 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+
+        librarySetup = new LibrarySetup(this);
+        librarySetup.loadLibraries();
 
         channelRegistry = new ChannelRegistry();
         channelRegistry.register(this);
@@ -72,10 +77,17 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
         return plugin;
     }
 
+    public LibrarySetup getLibrarySetup() {
+        return librarySetup;
+    }
+
+    public ChannelRegistry getChannelRegistry() {
+        return channelRegistry;
+    }
+
     public ConfigLoader getConfigLoader() {
         return configLoader;
     }
-
 
     public Config getConfiguration() {
         return config;
