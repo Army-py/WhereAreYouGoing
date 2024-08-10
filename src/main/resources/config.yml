@@ -1,7 +1,4 @@
 
-sqlite:
-  file: "data.db"
-
 # Clear players inventory when they join the server
 clear-inventory-on-join: true
 

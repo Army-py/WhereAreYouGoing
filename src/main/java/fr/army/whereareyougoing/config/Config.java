@@ -22,7 +22,6 @@ public class Config {
     public static Map<String, DestinationServer> servers = new HashMap<>();
     public static int checkServerCountInterval;
     public static WaitingDestinationIndicator waitingDestinationIndicator;
-    public static String localDatabaseName;
 
     public Config(YamlConfiguration config) {
         this.config = config;
@@ -50,8 +49,6 @@ public class Config {
                 "Unable to load waiting-destination-indicator section"
         );
         getWaitingDestinationIndicator(waitingDestinationIndicatorSection);
-
-        localDatabaseName = config.getString("sqlite.file", "data.db");
     }
 
     private void getDestinationSelector(@NotNull ConfigurationSection section){

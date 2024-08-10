@@ -1,6 +1,6 @@
 package fr.army.whereareyougoing.database;
 
-import fr.army.whereareyougoing.config.Config;
+import fr.army.whereareyougoing.config.Database;
 import fr.army.whereareyougoing.database.exception.impl.DatabaseConnectionException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -14,14 +14,13 @@ public class EMFLoader {
 
     private static EntityManagerFactory entityManagerFactory = null;
 
-    private final String localDatabaseName = Config.localDatabaseName;
+    private final String localDatabaseName = Database.localDatabaseName;
 
     public void setupEntityManagerFactory(@NotNull String dataFolderPath) throws DatabaseConnectionException {
         if (entityManagerFactory == null || !entityManagerFactory.isOpen()) {
             Properties properties = new Properties();
 
             properties.put("hibernate.hbm2ddl.auto", "update");
-            // properties.put("hibernate.jdbc.batch_size", Config.bactchSize);
             properties.put("hibernate.order_inserts", "true");
 
             properties.put("jakarta.persistence.jdbc.driver", "org.sqlite.JDBC");
