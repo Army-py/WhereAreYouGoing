@@ -4,8 +4,12 @@ import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
 import fr.army.whereareyougoing.command.CommandManager;
 import fr.army.whereareyougoing.config.Config;
+import fr.army.whereareyougoing.config.Database;
 import fr.army.whereareyougoing.database.EMFLoader;
 import fr.army.whereareyougoing.database.exception.impl.DatabaseConnectionException;
+import fr.army.whereareyougoing.database.model.impl.ServerModel;
+import fr.army.whereareyougoing.database.repository.RepositoryProvider;
+import fr.army.whereareyougoing.database.repository.impl.ServerRepository;
 import fr.army.whereareyougoing.library.LibrarySetup;
 import fr.army.whereareyougoing.listener.ListenerLoader;
 import fr.army.whereareyougoing.menu.Menus;
@@ -15,6 +19,8 @@ import fr.army.whereareyougoing.utils.network.task.counter.TaskCounterManager;
 import fr.army.whereareyougoing.utils.network.task.sender.TaskSenderManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Arrays;
+
 public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
     public static WhereAreYouGoingPlugin plugin;
@@ -23,9 +29,11 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
     private ChannelRegistry channelRegistry;
     private ConfigLoader configLoader;
     private Config config;
+    private Database database;
     private TaskSenderManager taskSenderManager;
     private TaskCounterManager taskCounterManager;
     private EMFLoader emfLoader = null;
+    private RepositoryProvider repositoryProvider;
     private CommandManager commandManager;
 
     @Override
@@ -38,17 +46,41 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
         channelRegistry = new ChannelRegistry();
         channelRegistry.register(this);
 
-        this.configLoader = new ConfigLoader(this);
+        configLoader = new ConfigLoader(this);
 
         try {
-            this.config = new Config(this.configLoader.initFile("config.yml"));
-            this.config.load();
+            database = new Database(configLoader.initFile("database.yml"));
+            database.load();
         } catch (Exception e) {
-            getLogger().severe("Unable to load config.yml");
+            getLogger().severe("Unable to load database.yml");
             getLogger().severe(e.getMessage());
+            getLogger().severe(Arrays.toString(e.getStackTrace()));
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+
+        emfLoader = new EMFLoader();
+        try {
+            emfLoader.setupEntityManagerFactory(getDataFolder().getPath());
+        } catch (DatabaseConnectionException e) {
+            getLogger().severe("Unable to connect to the database");
+            getLogger().severe(e.getCause().getMessage());
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        repositoryProvider = new RepositoryProvider(emfLoader);
+
+        try {
+            config = new Config(configLoader.initFile("config.yml"));
+            config.load();
+        } catch (Exception e) {
+            getLogger().severe("Unable to load config.yml");
+            getLogger().severe(e.getMessage());
+            getLogger().severe(Arrays.toString(e.getStackTrace()));
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
 
         final Menus menus = new Menus();
         menus.init();
@@ -67,17 +99,20 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
             return;
         }
 
-        emfLoader = new EMFLoader();
-        try {
-            emfLoader.setupEntityManagerFactory(getDataFolder().getPath());
-        } catch (DatabaseConnectionException e) {
-            getLogger().severe("Unable to connect to the database");
-            // getLogger().severe(e.getMessage());
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-
         commandManager = new CommandManager(this);
+
+        // Save servers in database
+        for (String serverName : Config.servers.keySet()) {
+            final ServerRepository serverRepository = repositoryProvider.getRepository(ServerRepository.class);
+            serverRepository.getFromServerName(serverName, serverModel -> {
+                if (serverModel == null) {
+                    final ServerModel model = new ServerModel();
+                    model.setName(serverName);
+                    model.setMaintenance(false);
+                    serverRepository.save(model);
+                }
+            });
+        }
 
         getLogger().info("WhereAreYouGoingPlugin enabled");
     }
@@ -120,6 +155,14 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
     public EMFLoader getEMFLoader() {
         return emfLoader;
+    }
+
+    public RepositoryProvider getRepositoryProvider() {
+        return repositoryProvider;
+    }
+
+    public CommandManager getCommandManager() {
+        return commandManager;
     }
 
     public ViaAPI<?> getViaAPI() {

@@ -1,15 +1,28 @@
 package fr.army.whereareyougoing.config;
 
+import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
+import fr.army.whereareyougoing.database.model.impl.ServerModel;
+import fr.army.whereareyougoing.database.repository.callback.AsyncCallBackObject;
+import fr.army.whereareyougoing.database.repository.impl.ServerRepository;
+
 public class DestinationServer {
 
     private final String serverName;
     private final int maxPlayers;
     private final DestinationProtocol destinationProtocol;
 
+    private final ServerRepository serverRepository;
+
     public DestinationServer(String serverName, int maxPlayers, DestinationProtocol destinationProtocol) {
         this.serverName = serverName;
         this.maxPlayers = maxPlayers;
         this.destinationProtocol = destinationProtocol;
+
+        this.serverRepository = WhereAreYouGoingPlugin.getPlugin().getRepositoryProvider().getRepository(ServerRepository.class);
+    }
+
+    public void setMaintenance(AsyncCallBackObject<ServerModel> asyncCallBackObject) {
+        serverRepository.updateMaintenance(serverName, asyncCallBackObject);
     }
 
     public String getServerName() {
