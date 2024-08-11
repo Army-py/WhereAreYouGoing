@@ -3,7 +3,6 @@ package fr.army.whereareyougoing.menu.button.impl;
 import com.viaversion.viaversion.api.ViaAPI;
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import fr.army.whereareyougoing.config.*;
-import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import fr.army.whereareyougoing.menu.button.Button;
 import fr.army.whereareyougoing.menu.button.template.ButtonTemplate;
 import fr.army.whereareyougoing.menu.view.AbstractMenuView;

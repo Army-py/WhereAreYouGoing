@@ -2,6 +2,8 @@ package fr.army.whereareyougoing;
 
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
+import fr.army.whereareyougoing.cache.CacheProvider;
+import fr.army.whereareyougoing.cache.impl.ServerCache;
 import fr.army.whereareyougoing.command.CommandManager;
 import fr.army.whereareyougoing.config.Config;
 import fr.army.whereareyougoing.config.Database;
@@ -35,6 +37,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
     private EMFLoader emfLoader = null;
     private RepositoryProvider repositoryProvider;
     private CommandManager commandManager;
+    private CacheProvider cacheProvider;
 
     @Override
     public void onEnable() {
@@ -69,6 +72,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
             return;
         }
         repositoryProvider = new RepositoryProvider(emfLoader);
+        cacheProvider = new CacheProvider();
 
         try {
             config = new Config(configLoader.initFile("config.yml"));
@@ -101,9 +105,10 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
         commandManager = new CommandManager(this);
 
-        // Save servers in database
+        // Save servers in database and cache
+        final ServerRepository serverRepository = repositoryProvider.getRepository(ServerRepository.class);
+        final ServerCache serverCache = cacheProvider.getCache(ServerCache.class);
         for (String serverName : Config.servers.keySet()) {
-            final ServerRepository serverRepository = repositoryProvider.getRepository(ServerRepository.class);
             serverRepository.getFromServerName(serverName, serverModel -> {
                 if (serverModel == null) {
                     final ServerModel model = new ServerModel();
@@ -111,6 +116,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
                     model.setMaintenance(false);
                     serverRepository.save(model);
                 }
+                serverCache.putCachedObject(serverName, serverModel);
             });
         }
 
@@ -163,6 +169,10 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
     public CommandManager getCommandManager() {
         return commandManager;
+    }
+
+    public CacheProvider getCacheProvider() {
+        return cacheProvider;
     }
 
     public ViaAPI<?> getViaAPI() {
