@@ -23,8 +23,7 @@ public class ConfigLoader {
         plugin.saveDefaultConfig();
         final File file = new File(plugin.getDataFolder(), fileName);
         if (!file.exists()) {
-            if (!file.getParentFile().mkdirs())
-                throw new UnableLoadConfigException(fileName, "Unable to create parent directories");
+            file.getParentFile().mkdirs();
 
             try {
                 Files.copy(Objects.requireNonNull(plugin.getResource(fileName)), file.toPath());
