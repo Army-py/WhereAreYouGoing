@@ -18,7 +18,7 @@ public class ButtonItem {
     private boolean glow;
     private String skullTexture;
 
-    private HashMap<String, String> metadata = new HashMap<>();
+    private final HashMap<String, String> metadata = new HashMap<>();
     private String identifier = null;
 
 
