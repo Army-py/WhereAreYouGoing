@@ -6,36 +6,35 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class Button<T extends AbstractMenuView<T>> implements ButtonSupplier {
+public abstract class Button<V extends AbstractMenuView<V>, T extends ButtonTemplate> implements ButtonSupplier<T> {
 
-    protected final ButtonTemplate buttonTemplate;
+    protected final T buttonTemplate;
 
-    protected T menuView;
+    protected V menuView;
 
-    public Button(ButtonTemplate buttonTemplate) {
+    public Button(T buttonTemplate) {
         this.buttonTemplate = buttonTemplate;
     }
 
     public abstract void onClick(InventoryClickEvent clickEvent);
 
 
-    public Button<T> setButtonItem(@NotNull ButtonItem buttonItem) {
+    public Button<V, T> setButtonItem(@NotNull ButtonItem buttonItem) {
         buttonTemplate.setButtonItem(buttonItem);
         return this;
     }
 
-
     @NotNull
-    public ButtonTemplate getButtonTemplate() {
+    public T getButtonTemplate() {
         return buttonTemplate;
     }
 
     @Nullable
-    public T getMenuView() {
+    public V getMenuView() {
         return menuView;
     }
 
-    public Button<T> setMenuView(T menuView) {
+    public Button<V, T> setMenuView(V menuView) {
         this.menuView = menuView;
         return this;
     }

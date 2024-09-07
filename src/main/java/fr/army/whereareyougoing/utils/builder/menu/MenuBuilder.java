@@ -47,7 +47,7 @@ public class MenuBuilder {
 
         final boolean precede = config.getBoolean("previous");
         final String[] pattern = config.getStringList("pattern").toArray(String[]::new);
-        final List<Button<? extends AbstractMenuView<?>>> buttons = new ArrayList<>();
+        final List<Button<? extends AbstractMenuView<?>, ?>> buttons = new ArrayList<>();
 
         int size = 0;
         for (int row = 0; row < pattern.length && row < 6; row++) {
@@ -79,7 +79,7 @@ public class MenuBuilder {
                 }
 
                 final ButtonTemplate buttonTemplate = new ButtonTemplate(character, buttonItem);
-                final Button<?> button = buttonType.createButton(buttonTemplate);
+                final Button<?, ?> button = buttonType.createButton(buttonTemplate);
                 buttons.add(button);
                 size++;
             }
@@ -97,7 +97,7 @@ public class MenuBuilder {
         final ButtonTemplate buttonTemplate = new ButtonTemplate('!', buttonItem);
         final BlankButton button = new BlankButton(buttonTemplate);
 
-        ArrayList<Button<? extends AbstractMenuView<?>>> buttons = new ArrayList<>();
+        ArrayList<Button<? extends AbstractMenuView<?>, ?>> buttons = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             buttons.add(button);
         }

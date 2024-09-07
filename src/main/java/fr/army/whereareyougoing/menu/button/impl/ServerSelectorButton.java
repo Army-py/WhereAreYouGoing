@@ -2,9 +2,11 @@ package fr.army.whereareyougoing.menu.button.impl;
 
 import com.viaversion.viaversion.api.ViaAPI;
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
+import fr.army.whereareyougoing.cache.impl.ServerCache;
 import fr.army.whereareyougoing.config.*;
+import fr.army.whereareyougoing.database.model.impl.ServerModel;
 import fr.army.whereareyougoing.menu.button.Button;
-import fr.army.whereareyougoing.menu.button.template.ButtonTemplate;
+import fr.army.whereareyougoing.menu.button.template.LockableButtonTemplate;
 import fr.army.whereareyougoing.menu.view.AbstractMenuView;
 import fr.army.whereareyougoing.menu.view.impl.MenuView;
 import fr.army.whereareyougoing.utils.network.packet.impl.PlayerCountPacket;
@@ -17,20 +19,25 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class ServerSelectorButton extends Button<MenuView> {
+public class ServerSelectorButton extends Button<MenuView, LockableButtonTemplate> {
 
     private final ViaAPI<?> viaAPI;
+    private final ServerCache serverCache;
 
-    public ServerSelectorButton(ButtonTemplate buttonTemplate) {
+    public ServerSelectorButton(LockableButtonTemplate buttonTemplate) {
         super(buttonTemplate);
 
         this.viaAPI = WhereAreYouGoingPlugin.getPlugin().getViaAPI();
+        this.serverCache = WhereAreYouGoingPlugin.getPlugin().getCacheProvider().getCache(ServerCache.class);
     }
 
     @Override
     public void onClick(InventoryClickEvent clickEvent) {
-        final Player player = (Player) clickEvent.getWhoClicked();
         final String serverName = buttonTemplate.getButtonItem().getMetadata().get("server");
+        final ServerModel cachedServer = serverCache.getCachedObject(serverName);
+        if (cachedServer != null && cachedServer.isMaintenance()) return;
+
+        final Player player = (Player) clickEvent.getWhoClicked();
 
         if (serverName == null) return;
 
@@ -70,7 +77,7 @@ public class ServerSelectorButton extends Button<MenuView> {
     }
 
     @Override
-    public @NotNull Button<? extends AbstractMenuView<?>> get(@NotNull ButtonTemplate buttonTemplate) {
+    public @NotNull Button<? extends AbstractMenuView<?>, LockableButtonTemplate> get(@NotNull LockableButtonTemplate buttonTemplate) {
         return new ServerSelectorButton(buttonTemplate);
     }
 }

@@ -2,11 +2,12 @@ package fr.army.whereareyougoing.menu.button.impl;
 
 import fr.army.whereareyougoing.menu.button.Button;
 import fr.army.whereareyougoing.menu.button.template.ButtonTemplate;
+import fr.army.whereareyougoing.menu.view.AbstractMenuView;
 import fr.army.whereareyougoing.menu.view.impl.MenuView;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class BlankButton extends Button<MenuView> {
+public class BlankButton extends Button<MenuView, ButtonTemplate> {
 
     public BlankButton(ButtonTemplate buttonTemplate) {
         super(buttonTemplate);
@@ -17,7 +18,7 @@ public class BlankButton extends Button<MenuView> {
     }
 
     @Override
-    public @NotNull Button<MenuView> get(@NotNull ButtonTemplate buttonTemplate) {
+    public @NotNull Button<? extends AbstractMenuView<?>, ButtonTemplate> get(@NotNull ButtonTemplate buttonTemplate) {
         return new BlankButton(buttonTemplate);
     }
 }

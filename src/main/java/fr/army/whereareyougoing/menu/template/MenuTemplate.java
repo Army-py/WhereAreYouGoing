@@ -16,7 +16,7 @@ public class MenuTemplate<T extends AbstractMenuView<T>> {
     private final String title;
     private final boolean precede;
     private final int size;
-    private final Button<T>[] buttons;
+    private final Button<T, ? extends ButtonTemplate>[] buttons;
 
     private WAYGMenu<T> precedingMenu;
 
@@ -30,15 +30,15 @@ public class MenuTemplate<T extends AbstractMenuView<T>> {
     }
 
     @NotNull
-    public Button<T> getButton(int slot) {
+    public Button<T, ? extends ButtonTemplate> getButton(int slot) {
         return buttons[slot];
     }
 
-    public void addButton(Button<T> button, int slot){
+    public void addButton(Button<T, ? extends ButtonTemplate> button, int slot){
         this.buttons[slot] = button;
     }
 
-    public void addButtons(Button<T>[] buttons){
+    public void addButtons(Button<T, ? extends ButtonTemplate>[] buttons){
         System.arraycopy(buttons, 0, this.buttons, 0, buttons.length);
     }
 
@@ -79,7 +79,7 @@ public class MenuTemplate<T extends AbstractMenuView<T>> {
 
     public int getComponentCount(){
         int count = 0;
-        for (Button<T> button : buttons) {
+        for (Button<T, ? extends ButtonTemplate> button : buttons) {
             if (button instanceof ComponentButton)
                 count++;
         }
@@ -102,7 +102,7 @@ public class MenuTemplate<T extends AbstractMenuView<T>> {
     }
 
     @NotNull
-    public Button<T>[] getButtons() {
+    public Button<T, ? extends ButtonTemplate>[] getButtons() {
         return buttons;
     }
 
