@@ -4,6 +4,7 @@ import fr.army.whereareyougoing.menu.button.impl.BlankButton;
 import fr.army.whereareyougoing.menu.button.impl.CloseButton;
 import fr.army.whereareyougoing.menu.button.impl.ServerSelectorButton;
 import fr.army.whereareyougoing.menu.button.template.ButtonTemplate;
+import fr.army.whereareyougoing.menu.button.template.LockableButtonTemplate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,18 +13,24 @@ import java.util.function.Function;
 public enum Buttons {
 
     BUTTON_BLANK(BlankButton::new),
-    BUTTON_SERVER_SELECTOR(ServerSelectorButton::new),
+    BUTTON_SERVER_SELECTOR(template -> {
+        if (template instanceof LockableButtonTemplate) {
+            return new ServerSelectorButton((LockableButtonTemplate) template);
+        } else {
+            throw new IllegalArgumentException("Expected LockableButtonTemplate");
+        }
+    }),
     BUTTON_CLOSE(CloseButton::new),
     ;
 
-    private final Function<ButtonTemplate, Button<?>> buttonSupplier;
+    private final Function<ButtonTemplate, ? extends Button<?, ?>> buttonSupplier;
 
-    Buttons(Function<ButtonTemplate, Button<?>> buttonSupplier) {
+    Buttons(Function<ButtonTemplate, Button<?, ?>> buttonSupplier) {
         this.buttonSupplier = buttonSupplier;
     }
 
     @Nullable
-    public Button<?> createButton(@NotNull ButtonTemplate buttonTemplate){
+    public Button<?, ?> createButton(@NotNull ButtonTemplate buttonTemplate){
          try {
              return buttonSupplier.apply(buttonTemplate);
          } catch (Exception e) {
