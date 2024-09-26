@@ -42,21 +42,13 @@ public class ReceiveCounterRunnable implements Runnable {
         if (!destinationServers.containsKey(serverName)) return;
 
         final ServerCache serverCache = plugin.getCacheProvider().getCache(ServerCache.class);
-        final TaskCounterManager taskCounterManager = plugin.getTaskCounterManager();
         final TaskSenderManager taskSenderManager = plugin.getTaskSenderManager();
         final PlayerSenderQueueManager playerSender = taskSenderManager.getPlayerSenderQueueManager(serverName);
 
         if (serverPlayerCount < destinationServers.get(serverName).getMaxPlayers()){
             playerSender.processSingleTask();
-
-            if (playerSender.isEmpty()){
-                taskCounterManager.stopTaskCounterChecker(serverName);
-            }
-        }else{
-            if (taskCounterManager.isEmpty()) {
-                taskCounterManager.startTaskCounterChecker(serverName);
-            }
         }
+
         playerSender.refreshPositionIndicator();
 
         final ServerModel serverModel = serverCache.getCachedObject(serverName);

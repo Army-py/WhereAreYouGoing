@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.jetbrains.annotations.Nullable;
 
 @Entity
 public class ServerModel extends AbstractModel {
@@ -39,11 +40,12 @@ public class ServerModel extends AbstractModel {
         this.maintenance = maintenance;
     }
 
-    public int getPlayerCount() {
+    @Nullable
+    public Integer getPlayerCount() {
         return playerCount;
     }
 
-    public void setPlayerCount(int playerCount) {
+    public void setPlayerCount(Integer playerCount) {
         this.playerCount = playerCount;
     }
 }

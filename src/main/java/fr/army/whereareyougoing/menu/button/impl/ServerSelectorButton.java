@@ -51,12 +51,6 @@ public class ServerSelectorButton extends Button<MenuView> {
             return;
         }
 
-        if (destinationServer.isFull()) {
-            player.sendMessage("§cCe serveur est plein.");
-            player.closeInventory();
-            return;
-        }
-
         final DestinationProtocol destinationProtocol = destinationServer.getDestinationProtocol();
 
         if (viaAPI.getPlayerVersion(player.getUniqueId()) < destinationProtocol.minProtocolVersion() ||

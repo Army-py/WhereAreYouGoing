@@ -56,6 +56,6 @@ public class DestinationServer {
 
     public boolean isFull() {
         final ServerModel cachedServer = getCachedServer();
-        return cachedServer != null && cachedServer.getPlayerCount() >= maxPlayers;
+        return cachedServer != null && cachedServer.getPlayerCount() != null && cachedServer.getPlayerCount() >= maxPlayers;
     }
 }
