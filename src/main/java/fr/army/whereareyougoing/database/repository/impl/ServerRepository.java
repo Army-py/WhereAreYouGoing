@@ -30,23 +30,4 @@ public class ServerRepository extends AbstractRepository<ServerModel> {
             }
         });
     }
-
-    public void updateMaintenance(String serverName, AsyncCallBackObject<ServerModel> asyncCallBackObject) {
-        executeInTransaction(entityManager -> {
-            final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            final CriteriaQuery<ServerModel> query = criteriaBuilder.createQuery(entityClass);
-            final Root<ServerModel> root = query.from(entityClass);
-
-            query.select(root);
-            query.where(criteriaBuilder.equal(root.get("name"), serverName));
-
-            ServerModel e = entityManager.createQuery(query).getSingleResult();
-            e.setMaintenance(!e.isMaintenance());
-
-            ServerModel model = entityManager.merge(e);
-            if (asyncCallBackObject != null) {
-                asyncCallBackObject.done(model);
-            }
-        });
-    }
 }

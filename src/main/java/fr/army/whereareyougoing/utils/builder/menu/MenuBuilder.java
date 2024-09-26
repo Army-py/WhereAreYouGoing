@@ -13,9 +13,11 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class MenuBuilder {
@@ -23,6 +25,8 @@ public class MenuBuilder {
     private static final MenuBuilder INSTANCE = new MenuBuilder();
 
     private final WhereAreYouGoingPlugin plugin = WhereAreYouGoingPlugin.getPlugin();
+
+    private final HashMap<String, ButtonItem> stateButtonItems = new HashMap<>();
 
     public static MenuBuilder getInstance() {
         return INSTANCE;
@@ -47,7 +51,7 @@ public class MenuBuilder {
 
         final boolean precede = config.getBoolean("previous");
         final String[] pattern = config.getStringList("pattern").toArray(String[]::new);
-        final List<Button<? extends AbstractMenuView<?>, ?>> buttons = new ArrayList<>();
+        final List<Button<? extends AbstractMenuView<?>>> buttons = new ArrayList<>();
 
         int size = 0;
         for (int row = 0; row < pattern.length && row < 6; row++) {
@@ -79,7 +83,29 @@ public class MenuBuilder {
                 }
 
                 final ButtonTemplate buttonTemplate = new ButtonTemplate(character, buttonItem);
-                final Button<?, ?> button = buttonType.createButton(buttonTemplate);
+
+                if (buttonType.equals(Buttons.BUTTON_SERVER_SELECTOR)) {
+                    for (String state : new String[]{"maintenance", "full"}) {
+                        if (config.isConfigurationSection("items." + character + "." + state)) {
+                            ConfigurationSection stateSection = config.getConfigurationSection("items." + character + "." + state);
+                            String stateMaterial = stateSection.getString("material", "AIR");
+                            String stateName = stateSection.getString("name", " ");
+                            int stateAmount = stateSection.getInt("amount", 1);
+                            List<String> stateLore = stateSection.getStringList("lore");
+                            boolean stateGlow = stateSection.getBoolean("is-glowing");
+                            String stateSkullTexture = stateSection.getString("skull-texture", null);
+
+
+                            ButtonItem stateButtonItem = new ButtonItem(Material.valueOf(stateMaterial), stateName, stateAmount, stateLore, stateGlow, stateSkullTexture);
+                            if (metadataSection != null) {
+                                metadataSection.getKeys(false).forEach(key -> stateButtonItem.putMetadata(key, metadataSection.getString(key)));
+                            }
+                            buttonTemplate.addState(state, stateButtonItem);
+                        }
+                    }
+                }
+
+                final Button<?> button = buttonType.createButton(buttonTemplate);
                 buttons.add(button);
                 size++;
             }
@@ -97,7 +123,7 @@ public class MenuBuilder {
         final ButtonTemplate buttonTemplate = new ButtonTemplate('!', buttonItem);
         final BlankButton button = new BlankButton(buttonTemplate);
 
-        ArrayList<Button<? extends AbstractMenuView<?>, ?>> buttons = new ArrayList<>();
+        ArrayList<Button<? extends AbstractMenuView<?>>> buttons = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             buttons.add(button);
         }

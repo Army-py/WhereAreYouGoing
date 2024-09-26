@@ -1,8 +1,10 @@
 package fr.army.whereareyougoing.utils.network.task.counter;
 
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
+import fr.army.whereareyougoing.cache.impl.ServerCache;
 import fr.army.whereareyougoing.config.Config;
 import fr.army.whereareyougoing.config.DestinationServer;
+import fr.army.whereareyougoing.database.model.impl.ServerModel;
 import fr.army.whereareyougoing.utils.network.player.counter.PlayerCount;
 import fr.army.whereareyougoing.utils.network.player.counter.PlayerCountReader;
 import fr.army.whereareyougoing.utils.network.task.queue.PlayerSenderQueueManager;
@@ -39,6 +41,7 @@ public class ReceiveCounterRunnable implements Runnable {
         final Map<String, DestinationServer> destinationServers = Config.servers;
         if (!destinationServers.containsKey(serverName)) return;
 
+        final ServerCache serverCache = plugin.getCacheProvider().getCache(ServerCache.class);
         final TaskCounterManager taskCounterManager = plugin.getTaskCounterManager();
         final TaskSenderManager taskSenderManager = plugin.getTaskSenderManager();
         final PlayerSenderQueueManager playerSender = taskSenderManager.getPlayerSenderQueueManager(serverName);
@@ -55,5 +58,12 @@ public class ReceiveCounterRunnable implements Runnable {
             }
         }
         playerSender.refreshPositionIndicator();
+
+        final ServerModel serverModel = serverCache.getCachedObject(serverName);
+        if (serverModel != null) {
+            serverModel.setPlayerCount(serverPlayerCount);
+        }
+
+        serverCache.putCachedObject(serverName, serverModel);
     }
 }

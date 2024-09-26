@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractMenuView<T extends AbstractMenuView<T>> implements IMenuView<T> {
 
@@ -52,7 +53,7 @@ public abstract class AbstractMenuView<T extends AbstractMenuView<T>> implements
     }
 
     @Override
-    public Inventory getInventory() {
+    public @NotNull Inventory getInventory() {
         return inventory;
     }
 }

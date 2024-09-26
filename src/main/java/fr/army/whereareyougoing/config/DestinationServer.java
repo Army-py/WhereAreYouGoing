@@ -5,6 +5,9 @@ import fr.army.whereareyougoing.cache.impl.ServerCache;
 import fr.army.whereareyougoing.database.model.impl.ServerModel;
 import fr.army.whereareyougoing.database.repository.callback.AsyncCallBackObject;
 import fr.army.whereareyougoing.database.repository.impl.ServerRepository;
+import fr.army.whereareyougoing.utils.network.task.data.AsyncDataSender;
+import org.bukkit.Bukkit;
+import org.jetbrains.annotations.Nullable;
 
 public class DestinationServer {
 
@@ -25,7 +28,13 @@ public class DestinationServer {
     }
 
     public void setMaintenance(AsyncCallBackObject<ServerModel> asyncCallBackObject) {
-        serverRepository.updateMaintenance(serverName, asyncCallBackObject);
+        final ServerModel serverModel = getCachedServer();
+        if (serverModel == null) return;
+
+        serverModel.setMaintenance(!serverModel.isMaintenance());
+        serverRepository.update(serverModel, asyncCallBackObject);
+
+        serverCache.putCachedObject(serverName, serverModel);
     }
 
     public String getServerName() {
@@ -38,5 +47,15 @@ public class DestinationServer {
 
     public DestinationProtocol getDestinationProtocol() {
         return destinationProtocol;
+    }
+
+    @Nullable
+    public ServerModel getCachedServer() {
+        return serverCache.getCachedObject(serverName);
+    }
+
+    public boolean isFull() {
+        final ServerModel cachedServer = getCachedServer();
+        return cachedServer != null && cachedServer.getPlayerCount() >= maxPlayers;
     }
 }

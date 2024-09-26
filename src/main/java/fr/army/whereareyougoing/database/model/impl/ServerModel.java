@@ -13,6 +13,7 @@ public class ServerModel extends AbstractModel {
     private Long id;
     private String name;
     private boolean maintenance;
+    private Integer playerCount;
 
     public void setId(Long id) {
         this.id = id;
@@ -36,5 +37,13 @@ public class ServerModel extends AbstractModel {
 
     public void setMaintenance(boolean maintenance) {
         this.maintenance = maintenance;
+    }
+
+    public int getPlayerCount() {
+        return playerCount;
+    }
+
+    public void setPlayerCount(int playerCount) {
+        this.playerCount = playerCount;
     }
 }

@@ -7,7 +7,7 @@ import fr.army.whereareyougoing.menu.view.impl.MenuView;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class CloseButton extends Button<MenuView, ButtonTemplate> {
+public class CloseButton extends Button<MenuView> {
 
     public CloseButton(ButtonTemplate buttonTemplate) {
         super(buttonTemplate);
@@ -19,7 +19,7 @@ public class CloseButton extends Button<MenuView, ButtonTemplate> {
     }
 
     @Override
-    public @NotNull Button<? extends AbstractMenuView<?>, ButtonTemplate> get(@NotNull ButtonTemplate buttonTemplate) {
+    public @NotNull Button<? extends AbstractMenuView<?>> get(@NotNull ButtonTemplate buttonTemplate) {
         return new CloseButton(buttonTemplate);
     }
 }

@@ -29,6 +29,15 @@ public abstract class AbstractRepository<T extends AbstractModel> {
         });
     }
 
+    public void update(T entity, AsyncCallBackObject<T> asyncCallBackObject) {
+        executeInTransaction(entityManager -> {
+            T mergedEntity = entityManager.merge(entity);
+            if (asyncCallBackObject != null) {
+                asyncCallBackObject.done(mergedEntity);
+            }
+        });
+    }
+
     public void save(T entity) {
         executeInTransaction(entityManager -> entityManager.persist(entity));
     }

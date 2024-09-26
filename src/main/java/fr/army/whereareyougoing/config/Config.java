@@ -102,7 +102,6 @@ public class Config {
                     protocolVersionMessage,
                     protocolVersionTitle
             );
-            System.out.println(destProtocol);
 
             final DestinationServer destServer = new DestinationServer(
                     serverName,

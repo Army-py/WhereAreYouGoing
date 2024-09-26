@@ -92,11 +92,6 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
         final ListenerLoader listenerLoader = new ListenerLoader();
         listenerLoader.registerListeners(this);
 
-        taskSenderManager = new TaskSenderManager(this);
-        taskSenderManager.startTasksSender();
-
-        taskCounterManager = new TaskCounterManager(this);
-
         if (Via.getAPI() == null) {
             getLogger().severe("ViaVersion is not installed");
             getServer().getPluginManager().disablePlugin(this);
@@ -105,7 +100,11 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
         commandManager = new CommandManager(this);
 
-        // Save servers in database and cache
+        taskSenderManager = new TaskSenderManager(this);
+        taskCounterManager = new TaskCounterManager(this);
+        taskSenderManager.startTasksSender();
+
+        // Save servers in database and store in cache
         final ServerRepository serverRepository = repositoryProvider.getRepository(ServerRepository.class);
         final ServerCache serverCache = cacheProvider.getCache(ServerCache.class);
         for (String serverName : Config.servers.keySet()) {
@@ -118,6 +117,8 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
                 }
                 serverCache.putCachedObject(serverName, serverModel);
             });
+
+            taskCounterManager.startTaskCounterChecker(serverName);
         }
 
         getLogger().info("WhereAreYouGoingPlugin enabled");
