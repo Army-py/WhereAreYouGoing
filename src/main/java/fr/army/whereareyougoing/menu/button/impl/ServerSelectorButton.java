@@ -45,7 +45,7 @@ public class ServerSelectorButton extends Button<MenuView> {
             return;
         }
 
-        if (cachedServer.isMaintenance()) {
+        if (cachedServer.isMaintenance() && !player.hasPermission("wayg.bypass.maintenance")) {
             player.sendMessage("§cCe serveur est actuellement en maintenance.");
             player.closeInventory();
             return;

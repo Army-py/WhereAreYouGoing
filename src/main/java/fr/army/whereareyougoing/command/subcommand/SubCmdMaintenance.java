@@ -47,6 +47,6 @@ public class SubCmdMaintenance extends SubCommand {
 
     @Override
     public String getPermission() {
-        return "whereareyougoing.maintenance";
+        return "wayg.maintenance";
     }
 }

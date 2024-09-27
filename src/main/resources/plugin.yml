@@ -14,4 +14,4 @@ commands:
     maintenance:
       description: "Set the maintenance mode of the given server"
       usage: "/whereareyougoing maintenance <server>"
-      permission: "whereareyougoing.maintenance.<server>"
+      permission: "wayg.maintenance.<server>"
