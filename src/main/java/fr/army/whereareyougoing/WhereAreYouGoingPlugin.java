@@ -12,6 +12,7 @@ import fr.army.whereareyougoing.database.exception.impl.DatabaseConnectionExcept
 import fr.army.whereareyougoing.database.model.impl.ServerModel;
 import fr.army.whereareyougoing.database.repository.RepositoryProvider;
 import fr.army.whereareyougoing.database.repository.impl.ServerRepository;
+import fr.army.whereareyougoing.external.ExternalManager;
 import fr.army.whereareyougoing.library.LibrarySetup;
 import fr.army.whereareyougoing.listener.ListenerLoader;
 import fr.army.whereareyougoing.menu.Menus;
@@ -28,6 +29,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
     public static WhereAreYouGoingPlugin plugin;
 
     private LibrarySetup librarySetup;
+    private ExternalManager externalManager;
     private ChannelRegistry channelRegistry;
     private ConfigLoader configLoader;
     private Config config;
@@ -45,6 +47,9 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
         librarySetup = new LibrarySetup(this);
         librarySetup.loadLibraries();
+
+        externalManager = new ExternalManager();
+        externalManager.load();
 
         channelRegistry = new ChannelRegistry();
         channelRegistry.register(this);
@@ -128,6 +133,10 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
     public void onDisable() {
 
         channelRegistry.unregister(this);
+
+        if (externalManager != null) {
+            externalManager.unload();
+        }
 
         getLogger().info("WhereAreYouGoingPlugin disabled");
     }

@@ -151,5 +151,13 @@
             <version>3.1.8</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>SimplePortals</groupId>
+            <artifactId>SimplePortals</artifactId>
+            <version>1.7.6</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/api/SimplePortals-1.7.6.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>
