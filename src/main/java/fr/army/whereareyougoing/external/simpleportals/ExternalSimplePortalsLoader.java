@@ -7,7 +7,7 @@ import xzot1k.plugins.sp.SimplePortals;
 
 public class ExternalSimplePortalsLoader implements ExternalLaoder {
 
-    private SimplePortals simplePortals;
+    public static SimplePortals simplePortals = null;
 
     @Override
     public void load() {
@@ -26,5 +26,9 @@ public class ExternalSimplePortalsLoader implements ExternalLaoder {
     @Override
     public void unload() {
         simplePortals = null;
+    }
+
+    private void enable() {
+
     }
 }
