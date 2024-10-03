@@ -45,6 +45,41 @@
                     </relocations>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <dependencies>
+                    <!-- Ajouter YGuard comme dépendance du plugin -->
+                    <dependency>
+                        <groupId>com.yworks</groupId>
+                        <artifactId>yguard</artifactId>
+                        <version>4.1.0</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <id>obfuscate</id>
+                        <configuration>
+                            <target>
+                                <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask"/>
+                                <yguard>
+                                    <inoutpair in="target/WhereAreYouGoing-1.0.jar" out="target/WhereAreYouGoing-1.0-obfuscated.jar"/>
+                                    <rename logfile="${project.build.directory}/yguard.log.xml">
+                                        <keep>
+                                            <class name="fr.army.whereareyougoing.WhereAreYouGoingPlugin"/>
+                                            <class name="fr.army.whereareyougoing.database.model.impl.**" fields="private"/>
+                                        </keep>
+                                    </rename>
+                                </yguard>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -158,6 +193,13 @@
             <version>1.7.6</version>
             <scope>system</scope>
             <systemPath>${basedir}/api/SimplePortals-1.7.6.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yworks</groupId>
+            <artifactId>yguard</artifactId>
+            <version>4.1.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

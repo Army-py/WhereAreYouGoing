@@ -48,7 +48,6 @@ public class EMFLoader {
     }
 
     public EntityManager getEntityManager() {
-        System.out.println("EMFLoader.getEntityManager");
         return entityManagerFactory.createEntityManager();
     }
 }
