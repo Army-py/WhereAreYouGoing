@@ -5,12 +5,10 @@ import org.bukkit.command.PluginCommand;
 
 public class CommandManager {
 
-    private final WAYGCommand waygCommand;
-
     public CommandManager(WhereAreYouGoingPlugin plugin) {
         PluginCommand singularityPluginCommand = plugin.getCommand("whereareyougoing");
 
-        waygCommand = new WAYGCommand(plugin);
+        WAYGCommand waygCommand = new WAYGCommand(plugin);
 
         if (singularityPluginCommand != null) {
             singularityPluginCommand.setExecutor(waygCommand);

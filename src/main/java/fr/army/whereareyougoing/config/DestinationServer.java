@@ -5,8 +5,6 @@ import fr.army.whereareyougoing.cache.impl.ServerCache;
 import fr.army.whereareyougoing.database.model.impl.ServerModel;
 import fr.army.whereareyougoing.database.repository.callback.AsyncCallBackObject;
 import fr.army.whereareyougoing.database.repository.impl.ServerRepository;
-import fr.army.whereareyougoing.utils.network.task.data.AsyncDataSender;
-import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Nullable;
 
 public class DestinationServer {

@@ -19,7 +19,7 @@ public class ConfigLoader {
         this.plugin = plugin;
     }
 
-    public YamlConfiguration initFile(@NotNull String fileName) throws IOException, UnableLoadConfigException {
+    public YamlConfiguration initFile(@NotNull String fileName) throws UnableLoadConfigException {
         if (!plugin.getDataFolder().exists()) {
             plugin.getDataFolder().mkdir();
         }

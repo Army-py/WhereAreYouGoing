@@ -13,9 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,7 +35,7 @@ public class MenuBuilder {
     public <T extends AbstractMenuView<T>> MenuBuilderResult<T> loadMenu(@NotNull String configName) {
         try {
             return buildMenu(plugin.getConfigLoader().initFile("menu/" + configName));
-        } catch (UnableLoadConfigException | IOException e) {
+        } catch (UnableLoadConfigException e) {
             return buildEmptyMenu();
         }
     }
@@ -89,6 +87,11 @@ public class MenuBuilder {
                     for (String state : new String[]{"maintenance", "full"}) {
                         if (config.isConfigurationSection("items." + character + "." + state)) {
                             ConfigurationSection stateSection = config.getConfigurationSection("items." + character + "." + state);
+                            if (stateSection == null) {
+                                plugin.getLogger().severe("Unable to load state " + state + " for button " + character + " in menu " + config.getName());
+                                return buildEmptyMenu();
+                            }
+
                             String stateMaterial = stateSection.getString("material", "AIR");
                             String stateName = stateSection.getString("name", " ");
                             int stateAmount = stateSection.getInt("amount", 1);

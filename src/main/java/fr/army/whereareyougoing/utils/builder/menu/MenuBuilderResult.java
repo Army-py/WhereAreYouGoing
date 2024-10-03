@@ -6,23 +6,17 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MenuBuilderResult<T extends AbstractMenuView<T>> {
+public record MenuBuilderResult<T extends AbstractMenuView<T>>(MenuTemplate<T> menuTemplate, YamlConfiguration config) {
 
-    private final MenuTemplate<T> menuTemplate;
-    private final YamlConfiguration config;
-
-    public MenuBuilderResult(MenuTemplate<T> menuTemplate, YamlConfiguration config) {
-        this.menuTemplate = menuTemplate;
-        this.config = config;
-    }
-
+    @Override
     @NotNull
-    public MenuTemplate<T> getMenuTemplate() {
+    public MenuTemplate<T> menuTemplate() {
         return menuTemplate;
     }
 
+    @Override
     @Nullable
-    public YamlConfiguration getConfig() {
+    public YamlConfiguration config() {
         return config;
     }
 }

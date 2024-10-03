@@ -60,7 +60,7 @@ servers:
 #        fade-out: 20
 
 
-# The amount of time in ticks between each check for the amount of players on a server.
+# The amount of time in ticks between each check for the number of players on a server.
 # This is used to send players when a slot is available with more ore less time.
 # Time in ticks
 # 20 ticks = 1 second

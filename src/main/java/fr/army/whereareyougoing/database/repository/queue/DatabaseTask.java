@@ -1,5 +1,6 @@
 package fr.army.whereareyougoing.database.repository.queue;
 
+import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
@@ -23,7 +24,7 @@ public class DatabaseTask implements Runnable {
             databaseOperation.accept(entityManager);
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            WhereAreYouGoingPlugin.getPlugin().getLogger().severe("Error while executing database task: " + e.getMessage());
         } finally {
             if (entityManager.isOpen()) {
                 entityManager.close();

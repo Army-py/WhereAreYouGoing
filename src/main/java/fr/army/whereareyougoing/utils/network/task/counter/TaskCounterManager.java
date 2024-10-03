@@ -2,7 +2,6 @@ package fr.army.whereareyougoing.utils.network.task.counter;
 
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import fr.army.whereareyougoing.config.Config;
-import fr.army.whereareyougoing.config.DestinationServer;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Map;

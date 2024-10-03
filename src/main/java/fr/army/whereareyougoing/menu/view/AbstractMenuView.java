@@ -31,7 +31,7 @@ public abstract class AbstractMenuView<T extends AbstractMenuView<T>> implements
 
     public void onClose(InventoryCloseEvent closeEvent){
         final Player player = (Player) closeEvent.getPlayer();
-        final MenuTemplate<T> menuTemplate = menu.getMenuBuilderResult().getMenuTemplate();
+        final MenuTemplate<T> menuTemplate = menu.getMenuBuilderResult().menuTemplate();
         final WAYGMenu<T> precedingMenu = menuTemplate.getPrecedingMenu();
 
         if (menuTemplate.canPrecede() && precedingMenu != null){

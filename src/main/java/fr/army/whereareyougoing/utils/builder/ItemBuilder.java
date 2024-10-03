@@ -20,6 +20,8 @@ import java.util.UUID;
 
 public class ItemBuilder {
 
+    private final WhereAreYouGoingPlugin plugin = WhereAreYouGoingPlugin.getPlugin();
+
     private final ItemStack item;
     private final ItemMeta meta;
 
@@ -63,7 +65,7 @@ public class ItemBuilder {
     public ItemBuilder setSkullTexture(@Nullable String texture){
         if (meta == null) return this;
         if (texture == null || texture.isBlank()) return this;
-        GameProfile profile = new GameProfile(toUUID(texture), (String) null);
+        GameProfile profile = new GameProfile(toUUID(texture), "customhead");
         profile.getProperties().put("textures", new Property("textures", texture));
 
         try {
@@ -71,7 +73,7 @@ public class ItemBuilder {
             mtd.setAccessible(true);
             mtd.set(meta, profile);
         } catch (IllegalAccessException | NoSuchFieldException | SecurityException ex) {
-            ex.printStackTrace();
+            plugin.getLogger().severe("Error while setting skull texture: " + ex.getMessage());
         }
         return this;
     }
@@ -93,7 +95,7 @@ public class ItemBuilder {
             mtd.setAccessible(true);
             mtd.set(meta, profile);
         } catch (IllegalAccessException | NoSuchFieldException | SecurityException ex) {
-            ex.printStackTrace();
+            plugin.getLogger().severe("Error while setting player head: " + ex.getMessage());
         }
         return this;
     }

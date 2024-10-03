@@ -17,10 +17,11 @@ public class Config {
 
     private final YamlConfiguration config;
 
+    public final static Map<String, DestinationServer> servers = new HashMap<>();
+
     public static String language;
     public static boolean clearInventoryOnJoin;
     public static DestinationSelector destinationSelector;
-    public static Map<String, DestinationServer> servers = new HashMap<>();
     public static int checkServerCountInterval;
     public static WaitingDestinationIndicator waitingDestinationIndicator;
 

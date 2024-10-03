@@ -24,7 +24,6 @@ import fr.army.whereareyougoing.utils.network.task.sender.TaskSenderManager;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 public final class WhereAreYouGoingPlugin extends JavaPlugin {
@@ -86,7 +85,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
         try {
             config = new Config(configLoader.initFile("config.yml"));
             config.load();
-        } catch (UnableLoadConfigException | IOException e) {
+        } catch (UnableLoadConfigException e) {
             getLogger().severe("Unable to load config.yml");
             getLogger().severe(e.getMessage());
             getLogger().severe(Arrays.toString(e.getStackTrace()));
@@ -96,7 +95,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
         try {
             this.messages = this.configLoader.initFile("lang/" + Config.language + ".yml");
-        } catch (UnableLoadConfigException | IOException e) {
+        } catch (UnableLoadConfigException e) {
             getLogger().severe("Unable to load " + Config.language + ".yml");
             getServer().getPluginManager().disablePlugin(this);
             return;
@@ -120,7 +119,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
         taskCounterManager = new TaskCounterManager(this);
         taskSenderManager.startTasksSender();
 
-        // Save servers in database and store in cache
+        // Save servers in the database and store in cache
         final ServerRepository serverRepository = repositoryProvider.getRepository(ServerRepository.class);
         final ServerCache serverCache = cacheProvider.getCache(ServerCache.class);
         for (String serverName : Config.servers.keySet()) {
