@@ -77,7 +77,16 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setPlayerHead(@Nullable OfflinePlayer player){
-        GameProfile profile = new GameProfile(player.getUniqueId(), player.getName());
+        final UUID playerUuid;
+        final String playerName;
+        if (player == null) {
+            playerUuid = UUID.randomUUID();
+            playerName = "Steve";
+        } else {
+            playerUuid = player.getUniqueId();
+            playerName = player.getName();
+        }
+        GameProfile profile = new GameProfile(playerUuid, playerName);
 
         try {
             Field mtd = meta.getClass().getDeclaredField("profile");
