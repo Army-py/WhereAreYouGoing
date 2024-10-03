@@ -27,8 +27,4 @@ public class ExternalSimplePortalsLoader implements ExternalLaoder {
     public void unload() {
         simplePortals = null;
     }
-
-    private void enable() {
-
-    }
 }
