@@ -20,12 +20,17 @@ public class ConfigLoader {
     }
 
     public YamlConfiguration initFile(@NotNull String fileName) throws UnableLoadConfigException {
-        plugin.saveDefaultConfig();
-        final File file = new File(plugin.getDataFolder(), fileName);
-        if (!file.exists()) {
-            if (!file.getParentFile().mkdirs())
-                throw new UnableLoadConfigException(fileName, "Unable to create parent directories");
+        if (!plugin.getDataFolder().exists()) {
+            plugin.getDataFolder().mkdir();
+        }
 
+        if (fileName.contains("/")) {
+            createFolders(fileName.substring(0, fileName.lastIndexOf("/")));
+        }
+
+        final File file = new File(plugin.getDataFolder(), fileName);
+
+        if (!file.exists()) {
             try {
                 Files.copy(Objects.requireNonNull(plugin.getResource(fileName)), file.toPath());
             } catch (IOException ignored) {
@@ -33,5 +38,12 @@ public class ConfigLoader {
             }
         }
         return YamlConfiguration.loadConfiguration(file);
+    }
+
+    private void createFolders(@NotNull String path) {
+        final File file = new File(plugin.getDataFolder(), path);
+        if (!file.exists()) {
+            file.mkdir();
+        }
     }
 }

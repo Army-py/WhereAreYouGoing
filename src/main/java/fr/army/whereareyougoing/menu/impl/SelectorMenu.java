@@ -5,7 +5,6 @@ import fr.army.whereareyougoing.menu.view.impl.MenuView;
 import fr.army.whereareyougoing.utils.builder.menu.MenuBuilder;
 import fr.army.whereareyougoing.utils.builder.menu.MenuBuilderResult;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class SelectorMenu extends WAYGMenu<MenuView> {

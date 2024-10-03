@@ -6,11 +6,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class Button<T extends AbstractMenuView<T>> implements ButtonSupplier {
+public abstract class Button<V extends AbstractMenuView<V>> implements ButtonSupplier {
 
     protected final ButtonTemplate buttonTemplate;
-
-    protected T menuView;
+    protected V menuView;
 
     public Button(ButtonTemplate buttonTemplate) {
         this.buttonTemplate = buttonTemplate;
@@ -19,11 +18,9 @@ public abstract class Button<T extends AbstractMenuView<T>> implements ButtonSup
     public abstract void onClick(InventoryClickEvent clickEvent);
 
 
-    public Button<T> setButtonItem(@NotNull ButtonItem buttonItem) {
+    public void setButtonItem(@NotNull ButtonItem buttonItem) {
         buttonTemplate.setButtonItem(buttonItem);
-        return this;
     }
-
 
     @NotNull
     public ButtonTemplate getButtonTemplate() {
@@ -31,22 +28,16 @@ public abstract class Button<T extends AbstractMenuView<T>> implements ButtonSup
     }
 
     @Nullable
-    public T getMenuView() {
+    public V getMenuView() {
         return menuView;
     }
 
-    public Button<T> setMenuView(T menuView) {
+    public Button<V> setMenuView(V menuView) {
         this.menuView = menuView;
         return this;
     }
 
-    // protected void openPreviousMenu(Optional<Team> team){
-    //     final MenuTemplate<T> menuTemplate = menuView.getMenu().getMenuBuilderResult().getMenuTemplate();
-    //     final Player viewer = menuView.getViewer();
-    //     if (menuTemplate.canPrecede() && menuTemplate.getPrecedingMenu() != null){
-    //         menuTemplate.getPrecedingMenu().createView(viewer, team).open();
-    //     }else{
-    //         viewer.closeInventory();
-    //     }
-    // }
+    public ButtonItem getButtonItem() {
+        return buttonTemplate.getButtonItem();
+    }
 }

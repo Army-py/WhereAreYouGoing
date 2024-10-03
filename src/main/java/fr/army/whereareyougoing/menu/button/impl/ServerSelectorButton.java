@@ -3,8 +3,11 @@ package fr.army.whereareyougoing.menu.button.impl;
 import com.viaversion.viaversion.api.ViaAPI;
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import fr.army.whereareyougoing.config.*;
-import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
+import fr.army.whereareyougoing.config.message.Messages;
+import fr.army.whereareyougoing.config.message.Placeholders;
+import fr.army.whereareyougoing.database.model.impl.ServerModel;
 import fr.army.whereareyougoing.menu.button.Button;
+import fr.army.whereareyougoing.menu.button.ButtonItem;
 import fr.army.whereareyougoing.menu.button.template.ButtonTemplate;
 import fr.army.whereareyougoing.menu.view.AbstractMenuView;
 import fr.army.whereareyougoing.menu.view.impl.MenuView;
@@ -18,6 +21,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+
 public class ServerSelectorButton extends Button<MenuView> {
 
     private final ViaAPI<?> viaAPI;
@@ -30,12 +35,28 @@ public class ServerSelectorButton extends Button<MenuView> {
 
     @Override
     public void onClick(InventoryClickEvent clickEvent) {
-        final Player player = (Player) clickEvent.getWhoClicked();
         final String serverName = buttonTemplate.getButtonItem().getMetadata().get("server");
+        final Player player = (Player) clickEvent.getWhoClicked();
 
         if (serverName == null) return;
 
         final DestinationServer destinationServer = Config.servers.get(serverName);
+        final ServerModel cachedServer = destinationServer.getCachedServer();
+
+        if (cachedServer == null) {
+            player.sendMessage(Messages.SERVER_NOT_FOUND.getMessage());
+            player.closeInventory();
+            return;
+        }
+
+        if (cachedServer.isMaintenance() && !player.hasPermission("wayg.bypass.maintenance")) {
+            player.sendMessage(Messages.SERVER_IN_MAINTENANCE.getMessage(new HashMap<>(){{
+                put(Placeholders.SERVER, serverName);
+            }}));
+            player.closeInventory();
+            return;
+        }
+
         final DestinationProtocol destinationProtocol = destinationServer.getDestinationProtocol();
 
         if (viaAPI.getPlayerVersion(player.getUniqueId()) < destinationProtocol.minProtocolVersion() ||
@@ -73,5 +94,32 @@ public class ServerSelectorButton extends Button<MenuView> {
     @Override
     public @NotNull Button<? extends AbstractMenuView<?>> get(@NotNull ButtonTemplate buttonTemplate) {
         return new ServerSelectorButton(buttonTemplate);
+    }
+
+    @Override
+    public ButtonItem getButtonItem() {
+        final String serverName = buttonTemplate.getButtonItem().getMetadata().get("server");
+        if (serverName != null) {
+            final DestinationServer server = Config.servers.get(serverName);
+            if (server != null) {
+                ButtonItem appropriateItem = getAppropriateButtonItem(server);
+                if (appropriateItem != null) {
+                    return appropriateItem;
+                }
+            }
+        }
+        return buttonTemplate.getButtonItem();
+    }
+
+    private @NotNull ButtonItem getAppropriateButtonItem(DestinationServer server) {
+        final ServerModel cachedServer = server.getCachedServer();
+        if (cachedServer != null && cachedServer.isMaintenance() && buttonTemplate.hasState("maintenance")) {
+            return buttonTemplate.getStateButtonItem("maintenance");
+        }
+        if (server.isFull() && buttonTemplate.hasState("full")) {
+            return buttonTemplate.getStateButtonItem("full");
+        }
+
+        return buttonTemplate.getButtonItem();
     }
 }

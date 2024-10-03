@@ -17,12 +17,12 @@ public class MenuView extends AbstractMenuView<MenuView> {
 
     @Override
     public Inventory createInventory() {
-        final MenuTemplate<MenuView> menuTemplate = menu.getMenuBuilderResult().getMenuTemplate();
+        final MenuTemplate<MenuView> menuTemplate = menu.getMenuBuilderResult().menuTemplate();
         final Inventory inventory = Bukkit.createInventory(this, menuTemplate.getSize(), menuTemplate.getTitle());
 
-        for (int slot = 0; slot < inventory.getSize(); slot++) {
+        for (int slot = 0; slot < menuTemplate.getSize(); slot++) {
             final Button<MenuView> button = menuTemplate.getButton(slot).setMenuView(this);
-            final ItemStack itemStack = button.getButtonTemplate().getButtonItem().build();
+            final ItemStack itemStack = button.getButtonItem().build();
             inventory.setItem(slot, itemStack);
         }
 

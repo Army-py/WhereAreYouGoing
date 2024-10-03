@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class MenuBuilder {
@@ -23,6 +24,8 @@ public class MenuBuilder {
     private static final MenuBuilder INSTANCE = new MenuBuilder();
 
     private final WhereAreYouGoingPlugin plugin = WhereAreYouGoingPlugin.getPlugin();
+
+    private final HashMap<String, ButtonItem> stateButtonItems = new HashMap<>();
 
     public static MenuBuilder getInstance() {
         return INSTANCE;
@@ -79,6 +82,33 @@ public class MenuBuilder {
                 }
 
                 final ButtonTemplate buttonTemplate = new ButtonTemplate(character, buttonItem);
+
+                if (buttonType.equals(Buttons.BUTTON_SERVER_SELECTOR)) {
+                    for (String state : new String[]{"maintenance", "full"}) {
+                        if (config.isConfigurationSection("items." + character + "." + state)) {
+                            ConfigurationSection stateSection = config.getConfigurationSection("items." + character + "." + state);
+                            if (stateSection == null) {
+                                plugin.getLogger().severe("Unable to load state " + state + " for button " + character + " in menu " + config.getName());
+                                return buildEmptyMenu();
+                            }
+
+                            String stateMaterial = stateSection.getString("material", "AIR");
+                            String stateName = stateSection.getString("name", " ");
+                            int stateAmount = stateSection.getInt("amount", 1);
+                            List<String> stateLore = stateSection.getStringList("lore");
+                            boolean stateGlow = stateSection.getBoolean("is-glowing");
+                            String stateSkullTexture = stateSection.getString("skull-texture", null);
+
+
+                            ButtonItem stateButtonItem = new ButtonItem(Material.valueOf(stateMaterial), stateName, stateAmount, stateLore, stateGlow, stateSkullTexture);
+                            if (metadataSection != null) {
+                                metadataSection.getKeys(false).forEach(key -> stateButtonItem.putMetadata(key, metadataSection.getString(key)));
+                            }
+                            buttonTemplate.addState(state, stateButtonItem);
+                        }
+                    }
+                }
+
                 final Button<?> button = buttonType.createButton(buttonTemplate);
                 buttons.add(button);
                 size++;

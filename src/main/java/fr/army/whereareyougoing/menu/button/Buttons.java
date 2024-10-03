@@ -16,7 +16,7 @@ public enum Buttons {
     BUTTON_CLOSE(CloseButton::new),
     ;
 
-    private final Function<ButtonTemplate, Button<?>> buttonSupplier;
+    private final Function<ButtonTemplate, ? extends Button<?>> buttonSupplier;
 
     Buttons(Function<ButtonTemplate, Button<?>> buttonSupplier) {
         this.buttonSupplier = buttonSupplier;

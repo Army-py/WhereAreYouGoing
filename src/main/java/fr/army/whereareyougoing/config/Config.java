@@ -17,10 +17,12 @@ public class Config {
 
     private final YamlConfiguration config;
 
+    public final static Map<String, DestinationServer> servers = new HashMap<>();
+
+    public static String language;
     public static boolean clearInventoryOnJoin;
     public static DefaultSelectedSlot defaultSelectedSlot;
     public static DestinationSelector destinationSelector;
-    public static Map<String, DestinationServer> servers = new HashMap<>();
     public static int checkServerCountInterval;
     public static WaitingDestinationIndicator waitingDestinationIndicator;
 
@@ -29,6 +31,8 @@ public class Config {
     }
 
     public void load(){
+        language = config.getString("language", "en_US");
+
         clearInventoryOnJoin = config.getBoolean("clear-inventory-on-join", true);
 
         final ConfigurationSection defaultSelectedSlotSection = Objects.requireNonNull(
@@ -118,7 +122,6 @@ public class Config {
                     protocolVersionMessage,
                     protocolVersionTitle
             );
-            System.out.println(destProtocol);
 
             final DestinationServer destServer = new DestinationServer(
                     serverName,

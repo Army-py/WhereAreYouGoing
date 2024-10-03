@@ -1,5 +1,3 @@
-
-
 title: "§5§lBoussole"
 
 previous: false
@@ -24,7 +22,7 @@ items:
     skull-texture: ""
     amount: 1
     is-glowing: false
-    lore: []
+    lore: [ ]
   "%":
     button-type: SERVER_SELECTOR
     material: DIAMOND_PICKAXE
@@ -32,9 +30,23 @@ items:
     skull-texture: ""
     amount: 1
     is-glowing: false
-    lore: []
+    lore: [ ]
     meta:
       server: "redirect-server-name-a"
+    maintenance:
+      material: RED_STAINED_GLASS_PANE
+      name: "§c§nMaintenance"
+      skull-texture: ""
+      amount: 1
+      is-glowing: false
+      lore: [ ]
+    full:
+      material: ORANGE_STAINED_GLASS_PANE
+      name: "§c§nFull"
+      skull-texture: ""
+      amount: 1
+      is-glowing: false
+      lore: [ ]
   "#":
     button-type: SERVER_SELECTOR
     material: DIAMOND_PICKAXE
@@ -42,9 +54,23 @@ items:
     skull-texture: ""
     amount: 1
     is-glowing: false
-    lore: []
+    lore: [ ]
     meta:
       server: "redirect-server-name-b"
+    maintenance:
+      material: RED_STAINED_GLASS_PANE
+      name: "§c§nMaintenance"
+      skull-texture: ""
+      amount: 1
+      is-glowing: false
+      lore: [ ]
+    full:
+      material: ORANGE_STAINED_GLASS_PANE
+      name: "§c§nFull"
+      skull-texture: ""
+      amount: 1
+      is-glowing: false
+      lore: [ ]
   "*":
     button-type: CLOSE
     material: ARROW
@@ -52,4 +78,4 @@ items:
     skull-texture: ""
     amount: 1
     is-glowing: false
-    lore: []
+    lore: [ ]

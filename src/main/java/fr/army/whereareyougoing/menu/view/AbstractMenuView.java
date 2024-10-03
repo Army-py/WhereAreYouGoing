@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractMenuView<T extends AbstractMenuView<T>> implements IMenuView<T> {
 
@@ -30,7 +31,7 @@ public abstract class AbstractMenuView<T extends AbstractMenuView<T>> implements
 
     public void onClose(InventoryCloseEvent closeEvent){
         final Player player = (Player) closeEvent.getPlayer();
-        final MenuTemplate<T> menuTemplate = menu.getMenuBuilderResult().getMenuTemplate();
+        final MenuTemplate<T> menuTemplate = menu.getMenuBuilderResult().menuTemplate();
         final WAYGMenu<T> precedingMenu = menuTemplate.getPrecedingMenu();
 
         if (menuTemplate.canPrecede() && precedingMenu != null){
@@ -52,7 +53,7 @@ public abstract class AbstractMenuView<T extends AbstractMenuView<T>> implements
     }
 
     @Override
-    public Inventory getInventory() {
+    public @NotNull Inventory getInventory() {
         return inventory;
     }
 }

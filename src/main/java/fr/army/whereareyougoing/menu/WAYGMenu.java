@@ -19,7 +19,7 @@ public abstract class WAYGMenu<T extends AbstractMenuView<T>> {
     public abstract T createView(Player player);
 
     public void onClick(InventoryClickEvent clickEvent){
-        final MenuTemplate<T> menuTemplate = this.menuBuilderResult.getMenuTemplate();
+        final MenuTemplate<T> menuTemplate = this.menuBuilderResult.menuTemplate();
         final int slot = clickEvent.getSlot();
         final Button<T> button = menuTemplate.getButton(slot);
 
