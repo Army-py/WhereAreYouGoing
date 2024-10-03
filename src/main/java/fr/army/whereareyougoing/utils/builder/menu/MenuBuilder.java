@@ -15,6 +15,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class MenuBuilder {
     public <T extends AbstractMenuView<T>> MenuBuilderResult<T> loadMenu(@NotNull String configName) {
         try {
             return buildMenu(plugin.getConfigLoader().initFile("menu/" + configName));
-        } catch (UnableLoadConfigException e) {
+        } catch (UnableLoadConfigException | IOException e) {
             return buildEmptyMenu();
         }
     }

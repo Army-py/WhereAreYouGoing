@@ -17,11 +17,14 @@ import fr.army.whereareyougoing.library.LibrarySetup;
 import fr.army.whereareyougoing.listener.ListenerLoader;
 import fr.army.whereareyougoing.menu.Menus;
 import fr.army.whereareyougoing.utils.loader.ConfigLoader;
+import fr.army.whereareyougoing.utils.loader.exception.UnableLoadConfigException;
 import fr.army.whereareyougoing.utils.network.channel.ChannelRegistry;
 import fr.army.whereareyougoing.utils.network.task.counter.TaskCounterManager;
 import fr.army.whereareyougoing.utils.network.task.sender.TaskSenderManager;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public final class WhereAreYouGoingPlugin extends JavaPlugin {
@@ -34,6 +37,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
     private ConfigLoader configLoader;
     private Config config;
     private Database database;
+    private YamlConfiguration messages;
     private TaskSenderManager taskSenderManager;
     private TaskCounterManager taskCounterManager;
     private EMFLoader emfLoader = null;
@@ -82,7 +86,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
         try {
             config = new Config(configLoader.initFile("config.yml"));
             config.load();
-        } catch (Exception e) {
+        } catch (UnableLoadConfigException | IOException e) {
             getLogger().severe("Unable to load config.yml");
             getLogger().severe(e.getMessage());
             getLogger().severe(Arrays.toString(e.getStackTrace()));
@@ -90,6 +94,13 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
             return;
         }
 
+        try {
+            this.messages = this.configLoader.initFile("lang/" + Config.language + ".yml");
+        } catch (UnableLoadConfigException | IOException e) {
+            getLogger().severe("Unable to load " + Config.language + ".yml");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
         final Menus menus = new Menus();
         menus.init();
@@ -159,6 +170,14 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
 
     public Config getConfiguration() {
         return config;
+    }
+
+    public Database getDatabase() {
+        return database;
+    }
+
+    public YamlConfiguration getMessages() {
+        return messages;
     }
 
     public TaskSenderManager getTaskSenderManager() {

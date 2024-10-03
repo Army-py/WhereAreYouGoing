@@ -17,6 +17,7 @@ public class Config {
 
     private final YamlConfiguration config;
 
+    public static String language;
     public static boolean clearInventoryOnJoin;
     public static DestinationSelector destinationSelector;
     public static Map<String, DestinationServer> servers = new HashMap<>();
@@ -28,6 +29,8 @@ public class Config {
     }
 
     public void load(){
+        language = config.getString("language", "en_US");
+
         clearInventoryOnJoin = config.getBoolean("clear-inventory-on-join", true);
 
         final ConfigurationSection selectorSection = Objects.requireNonNull(

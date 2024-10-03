@@ -1,0 +1,26 @@
+
+# Each message has a certain number of placeholders available. Some have, some don't
+# Refer to the messages to see if the placeholders are available or not.
+# If there are no instructions mentioning placeholders at the top of the
+# message, then no placeholders are available for that message.
+#
+# List of all available placeholders :
+# {SERVER} : the name of the server
+
+COMMAND_INVALID: "§cCommande invalide."
+# Called when the command is invalid
+
+SERVER_NOT_FOUND: "§cLe serveur {SERVER} n'a pas été trouvé."
+# Called when the server is not found in the configuration file or just doesn't exist
+
+NO_PERMISSION: "§cVous n'avez pas la permission d'utiliser cette commande."
+# Called when the player does not have permission to use the command
+
+MAINTENANCE_ON: "§aLe serveur {SERVER} est maintenant en mode maintenance."
+# Called when the maintenance mode is turned on
+
+MAINTENANCE_OFF: "§aLe serveur {SERVER} n'est plus en mode maintenance."
+# Called when the maintenance mode is turned off
+
+SERVER_IN_MAINTENANCE: "§cLe serveur {SERVER} est actuellement en mode maintenance."
+# Called when the server is in maintenance mode and the player tries to join

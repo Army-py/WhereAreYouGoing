@@ -3,6 +3,8 @@ package fr.army.whereareyougoing.menu.button.impl;
 import com.viaversion.viaversion.api.ViaAPI;
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import fr.army.whereareyougoing.config.*;
+import fr.army.whereareyougoing.config.message.Messages;
+import fr.army.whereareyougoing.config.message.Placeholders;
 import fr.army.whereareyougoing.database.model.impl.ServerModel;
 import fr.army.whereareyougoing.menu.button.Button;
 import fr.army.whereareyougoing.menu.button.ButtonItem;
@@ -18,6 +20,8 @@ import fr.army.whereareyougoing.utils.network.task.sender.TaskSenderManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 
 public class ServerSelectorButton extends Button<MenuView> {
 
@@ -40,13 +44,15 @@ public class ServerSelectorButton extends Button<MenuView> {
         final ServerModel cachedServer = destinationServer.getCachedServer();
 
         if (cachedServer == null) {
-            player.sendMessage("§cServeur non trouvé.");
+            player.sendMessage(Messages.SERVER_NOT_FOUND.getMessage());
             player.closeInventory();
             return;
         }
 
         if (cachedServer.isMaintenance() && !player.hasPermission("wayg.bypass.maintenance")) {
-            player.sendMessage("§cCe serveur est actuellement en maintenance.");
+            player.sendMessage(Messages.SERVER_IN_MAINTENANCE.getMessage(new HashMap<>(){{
+                put(Placeholders.SERVER, serverName);
+            }}));
             player.closeInventory();
             return;
         }

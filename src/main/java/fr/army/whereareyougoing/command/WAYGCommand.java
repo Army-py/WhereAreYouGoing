@@ -2,6 +2,7 @@ package fr.army.whereareyougoing.command;
 
 import fr.army.whereareyougoing.WhereAreYouGoingPlugin;
 import fr.army.whereareyougoing.command.subcommand.SubCmdMaintenance;
+import fr.army.whereareyougoing.config.message.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,12 +30,12 @@ public class WAYGCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             return true;
         }
 
         if (args.length == 0) {
-            sender.sendMessage("§cInvalid command.");
+            sender.sendMessage(Messages.COMMAND_INVALID.getMessage());
             return true;
         }
 
@@ -43,7 +44,7 @@ public class WAYGCommand implements CommandExecutor, TabCompleter {
             final SubCommand subCmd = (SubCommand) subCommands.get(args[0]);
 
             if (!sender.hasPermission(subCmd.getPermission())) {
-                sender.sendMessage("§cYou do not have permission to use this command.");
+                sender.sendMessage(Messages.NO_PERMISSION.getMessage());
                 return true;
             }
 
@@ -55,7 +56,7 @@ public class WAYGCommand implements CommandExecutor, TabCompleter {
             }
         }
 
-        sender.sendMessage("§cInvalid command.");
+        sender.sendMessage(Messages.COMMAND_INVALID.getMessage());
         return true;
     }
 
