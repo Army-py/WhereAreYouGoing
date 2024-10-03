@@ -4,8 +4,8 @@
 # If there are no instructions mentioning placeholders at the top of the
 # message, then no placeholders are available for that message.
 #
-# List of all available placeholders :
-# {SERVER} : the name of the server
+# List of all available placeholders:
+# {SERVER}: the name of the server
 
 COMMAND_INVALID: "§cCommande invalide."
 # Called when the command is invalid
