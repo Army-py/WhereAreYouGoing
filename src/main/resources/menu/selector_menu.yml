@@ -32,7 +32,7 @@ items:
     is-glowing: false
     lore: [ ]
     meta:
-      server: "redirect-server-name-a"
+      server: "redirect-server-name-a" # Must be the same name as the server in config.yml and used in your proxy (like Bungeecord or Velocity)
     maintenance:
       material: RED_STAINED_GLASS_PANE
       name: "§c§nMaintenance"
@@ -56,7 +56,7 @@ items:
     is-glowing: false
     lore: [ ]
     meta:
-      server: "redirect-server-name-b"
+      server: "redirect-server-name-b" # Must be the same name as the server in config.yml and used in your proxy (like Bungeecord or Velocity)
     maintenance:
       material: RED_STAINED_GLASS_PANE
       name: "§c§nMaintenance"

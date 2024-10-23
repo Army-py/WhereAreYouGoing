@@ -1,4 +1,10 @@
 
+# The language file to use
+# Default available languages :
+# - en_US
+# - fr_FR
+language: 'en_US'
+
 # Clear players inventory when they join the server
 clear-inventory-on-join: true
 
@@ -18,7 +24,7 @@ destination-selector:
   lore: []
 
 servers:
-  redirect-server-name-a: # Must be the same name as the selector_menu file in menu folder in *.meta.server
+  redirect-server-name-a: # Must be the same name as the selector_menu file in menu folder in *.meta.server field
     max-players: 60
     protocol-version:
         max-protocol: 47 # -1 to disable
@@ -33,7 +39,7 @@ servers:
           fade-in: 20
           stay: 60
           fade-out: 20
-  redirect-server-name-b: # Must be the same name as the selector_menu file in menu folder in *.meta.server
+  redirect-server-name-b: # Must be the same name as the selector_menu file in menu folder in *.meta.server field
     max-players: 60
     protocol-version:
         max-protocol: 47 # -1 to disable
