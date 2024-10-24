@@ -1,7 +1,7 @@
 name: WhereAreYouGoing
 author: Army_
 version: '${project.version}'
-main: fr.army.whereareyougoing.WhereAreYouGoingPlugin
+main: fr.army.leap.WhereAreYouGoingPlugin
 api-version: '1.20'
 description: 'A plugin that allows players to teleport to other servers.'
 depend:

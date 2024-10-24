@@ -40,7 +40,7 @@
                     <relocations>
                         <relocation>
                             <pattern>net.byteflux.libby</pattern>
-                            <shadedPattern>fr.army.whereareyougoing.libs.net.byteflux.libby</shadedPattern>
+                            <shadedPattern>fr.army.leap.libs.net.byteflux.libby</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -70,8 +70,8 @@
                                     <inoutpair in="target/WhereAreYouGoing-1.0.jar" out="target/WhereAreYouGoing-1.0-obfuscated.jar"/>
                                     <rename logfile="${project.build.directory}/yguard.log.xml">
                                         <keep>
-                                            <class name="fr.army.whereareyougoing.WhereAreYouGoingPlugin"/>
-                                            <class name="fr.army.whereareyougoing.database.model.impl.**" fields="private"/>
+                                            <class name="fr.army.leap.WhereAreYouGoingPlugin"/>
+                                            <class name="fr.army.leap.database.model.impl.**" fields="private"/>
                                         </keep>
                                     </rename>
                                 </yguard>
