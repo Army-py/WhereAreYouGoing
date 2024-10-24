@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fr.army</groupId>
-    <artifactId>WhereAreYouGoing</artifactId>
+    <artifactId>Leap</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>WhereAreYouGoing</name>
+    <name>Leap</name>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -67,10 +67,10 @@
                             <target>
                                 <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask"/>
                                 <yguard>
-                                    <inoutpair in="target/WhereAreYouGoing-1.0.jar" out="target/WhereAreYouGoing-1.0-obfuscated.jar"/>
+                                    <inoutpair in="target/Leap-1.0.jar" out="target/Leap-1.0-obfuscated.jar"/>
                                     <rename logfile="${project.build.directory}/yguard.log.xml">
                                         <keep>
-                                            <class name="fr.army.leap.WhereAreYouGoingPlugin"/>
+                                            <class name="fr.army.leap.LeapPlugin"/>
                                             <class name="fr.army.leap.database.model.impl.**" fields="private"/>
                                         </keep>
                                     </rename>
