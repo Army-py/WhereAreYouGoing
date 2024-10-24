@@ -3,11 +3,11 @@ title: "§5§lBoussole"
 previous: false
 
 pattern:
-  - ". . . . . . . . ."
-  - ". . % . . . # . ."
-  - ". . . . . . . . ."
-  - ". . . . . . . . ."
-  - ". . . . . . . . ."
+  - "_ _ _ _ _ _ _ _ _"
+  - "_ _ % _ _ _ # _ _"
+  - "_ _ _ _ _ _ _ _ _"
+  - "_ _ _ _ _ _ _ _ _"
+  - "_ _ _ _ _ _ _ _ _"
 
 
 # Available button types
@@ -15,7 +15,7 @@ pattern:
 # - CLOSE
 # - SERVER_SELECTOR
 items:
-  ".":
+  "_":
     button-type: BLANK
     material: LIGHT_BLUE_STAINED_GLASS_PANE
     name: " "
