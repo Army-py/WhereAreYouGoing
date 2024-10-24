@@ -1,6 +1,6 @@
 package fr.army.leap.command;
 
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 import fr.army.leap.command.subcommand.SubCmdMaintenance;
 import fr.army.leap.config.message.Messages;
 import org.bukkit.command.Command;
@@ -16,12 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WAYGCommand implements CommandExecutor, TabCompleter {
+public class LeapCommand implements CommandExecutor, TabCompleter {
 
-    private final WhereAreYouGoingPlugin plugin;
+    private final LeapPlugin plugin;
     private final Map<String, Object> subCommands;
 
-    public WAYGCommand(WhereAreYouGoingPlugin plugin) {
+    public LeapCommand(LeapPlugin plugin) {
         this.plugin = plugin;
         this.subCommands = new HashMap<>();
 
@@ -78,7 +78,7 @@ public class WAYGCommand implements CommandExecutor, TabCompleter {
         return List.of();
     }
 
-    private void initSubCommands(@NotNull WhereAreYouGoingPlugin plugin) {
+    private void initSubCommands(@NotNull LeapPlugin plugin) {
         subCommands.put("maintenance", new SubCmdMaintenance(plugin));
     }
 }

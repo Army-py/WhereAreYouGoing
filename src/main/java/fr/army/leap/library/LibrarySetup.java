@@ -2,7 +2,7 @@ package fr.army.leap.library;
 
 import com.alessiodp.libby.BukkitLibraryManager;
 import com.alessiodp.libby.Library;
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ public class LibrarySetup {
 
     private final BukkitLibraryManager bukkitLibraryManager;
 
-    public LibrarySetup(WhereAreYouGoingPlugin plugin) {
+    public LibrarySetup(LeapPlugin plugin) {
         this.bukkitLibraryManager = new BukkitLibraryManager(plugin);
     }
 

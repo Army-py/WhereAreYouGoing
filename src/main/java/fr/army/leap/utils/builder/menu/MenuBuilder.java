@@ -1,6 +1,6 @@
 package fr.army.leap.utils.builder.menu;
 
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 import fr.army.leap.menu.button.Button;
 import fr.army.leap.menu.button.ButtonItem;
 import fr.army.leap.menu.button.Buttons;
@@ -23,7 +23,7 @@ public class MenuBuilder {
 
     private static final MenuBuilder INSTANCE = new MenuBuilder();
 
-    private final WhereAreYouGoingPlugin plugin = WhereAreYouGoingPlugin.getPlugin();
+    private final LeapPlugin plugin = LeapPlugin.getPlugin();
 
     private final HashMap<String, ButtonItem> stateButtonItems = new HashMap<>();
 

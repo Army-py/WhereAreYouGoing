@@ -1,6 +1,6 @@
 package fr.army.leap.utils.network.task.sender;
 
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 import fr.army.leap.config.Config;
 import fr.army.leap.utils.network.task.queue.PlayerSenderQueueManager;
 
@@ -10,10 +10,10 @@ import java.util.Set;
 
 public class TaskSenderManager {
 
-    private final WhereAreYouGoingPlugin plugin;
+    private final LeapPlugin plugin;
     private final Map<String, PlayerSenderQueueManager> playerSenderQueueManagerMap;
 
-    public TaskSenderManager(WhereAreYouGoingPlugin plugin) {
+    public TaskSenderManager(LeapPlugin plugin) {
         this.plugin = plugin;
         this.playerSenderQueueManagerMap = new HashMap<>();
     }

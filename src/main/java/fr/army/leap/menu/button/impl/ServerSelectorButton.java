@@ -1,7 +1,7 @@
 package fr.army.leap.menu.button.impl;
 
 import com.viaversion.viaversion.api.ViaAPI;
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 import fr.army.leap.config.*;
 import fr.army.leap.config.message.Messages;
 import fr.army.leap.config.message.Placeholders;
@@ -30,7 +30,7 @@ public class ServerSelectorButton extends Button<MenuView> {
     public ServerSelectorButton(ButtonTemplate buttonTemplate) {
         super(buttonTemplate);
 
-        this.viaAPI = WhereAreYouGoingPlugin.getPlugin().getViaAPI();
+        this.viaAPI = LeapPlugin.getPlugin().getViaAPI();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class ServerSelectorButton extends Button<MenuView> {
             return;
         }
 
-        if (cachedServer.isMaintenance() && !player.hasPermission("wayg.bypass.maintenance")) {
+        if (cachedServer.isMaintenance() && !player.hasPermission("leap.bypass.maintenance")) {
             player.sendMessage(Messages.SERVER_IN_MAINTENANCE.getMessage(new HashMap<>(){{
                 put(Placeholders.SERVER, serverName);
             }}));
@@ -81,7 +81,7 @@ public class ServerSelectorButton extends Button<MenuView> {
         final QueuedDataSender queuedDataSender = new QueuedDataSender();
         final AsyncDataSender asyncDataSender = new AsyncDataSender();
         final PlayerSenderPacket playerSenderPacket = new PlayerSenderPacket(player, serverName);
-        final TaskSenderManager taskSenderManager = WhereAreYouGoingPlugin.getPlugin().getTaskSenderManager();
+        final TaskSenderManager taskSenderManager = LeapPlugin.getPlugin().getTaskSenderManager();
         final PlayerSenderQueueManager playerSenderQueueManager = taskSenderManager.getPlayerSenderQueueManager(serverName);
 
         player.closeInventory();

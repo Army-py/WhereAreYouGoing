@@ -2,7 +2,7 @@ package fr.army.leap.utils.builder;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
@@ -20,7 +20,7 @@ import java.util.UUID;
 
 public class ItemBuilder {
 
-    private final WhereAreYouGoingPlugin plugin = WhereAreYouGoingPlugin.getPlugin();
+    private final LeapPlugin plugin = LeapPlugin.getPlugin();
 
     private final ItemStack item;
     private final ItemMeta meta;
@@ -111,7 +111,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setPersistentData(@NotNull String key, @NotNull String value){
-        meta.getPersistentDataContainer().set(new NamespacedKey(WhereAreYouGoingPlugin.getPlugin(), key), PersistentDataType.STRING, value);
+        meta.getPersistentDataContainer().set(new NamespacedKey(LeapPlugin.getPlugin(), key), PersistentDataType.STRING, value);
         return this;
     }
 

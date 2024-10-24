@@ -1,6 +1,6 @@
 package fr.army.leap.menu.view.impl;
 
-import fr.army.leap.menu.WAYGMenu;
+import fr.army.leap.menu.LeapMenu;
 import fr.army.leap.menu.button.Button;
 import fr.army.leap.menu.template.MenuTemplate;
 import fr.army.leap.menu.view.AbstractMenuView;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class MenuView extends AbstractMenuView<MenuView> {
 
-    public MenuView(Player player, WAYGMenu<MenuView> menu) {
+    public MenuView(Player player, LeapMenu<MenuView> menu) {
         super(player, menu);
     }
 

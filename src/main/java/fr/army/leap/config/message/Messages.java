@@ -1,6 +1,6 @@
 package fr.army.leap.config.message;
 
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 import fr.army.leap.config.Config;
 import fr.army.leap.config.message.exception.MessageNotFoundException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,7 +19,7 @@ public enum Messages {
     ;
 
     public String getMessage(@NotNull Map<Placeholders, String> args) {
-        final YamlConfiguration messages = WhereAreYouGoingPlugin.getPlugin().getMessages();
+        final YamlConfiguration messages = LeapPlugin.getPlugin().getMessages();
 
         String message = messages.getString(this.toString());
         if (message == null){
@@ -30,7 +30,7 @@ public enum Messages {
     }
 
     public String getMessage() {
-        final YamlConfiguration messages = WhereAreYouGoingPlugin.getPlugin().getMessages();
+        final YamlConfiguration messages = LeapPlugin.getPlugin().getMessages();
 
         final String message = messages.getString(this.toString());
         if (message == null){

@@ -1,17 +1,15 @@
-name: WhereAreYouGoing
+name: Leap
 author: Army_
 version: '${project.version}'
-main: fr.army.leap.WhereAreYouGoingPlugin
+main: fr.army.leap.LeapPlugin
 api-version: '1.20'
-description: 'A plugin that allows players to teleport to other servers.'
+description: 'A plugin that allows players to be teleported to other servers.'
 depend:
   - ViaVersion
 commands:
-  whereareyougoing:
-    aliases:
-      - wh
+  leap:
     description: "Main command of the plugin"
     maintenance:
       description: "Set the maintenance mode of the given server"
-      usage: "/whereareyougoing maintenance <server>"
-      permission: "wayg.maintenance.<server>"
+      usage: "/leap maintenance <server>"
+      permission: "leap.maintenance.<server>"

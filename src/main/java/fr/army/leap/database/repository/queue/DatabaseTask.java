@@ -1,6 +1,6 @@
 package fr.army.leap.database.repository.queue;
 
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
@@ -24,7 +24,7 @@ public class DatabaseTask implements Runnable {
             databaseOperation.accept(entityManager);
             transaction.commit();
         } catch (Exception e) {
-            WhereAreYouGoingPlugin.getPlugin().getLogger().severe("Error while executing database task: " + e.getMessage());
+            LeapPlugin.getPlugin().getLogger().severe("Error while executing database task: " + e.getMessage());
         } finally {
             if (entityManager.isOpen()) {
                 entityManager.close();

@@ -1,6 +1,6 @@
 package fr.army.leap.utils.network.task.counter;
 
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 import fr.army.leap.config.Config;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -9,11 +9,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TaskCounterManager {
 
-    private final WhereAreYouGoingPlugin plugin;
+    private final LeapPlugin plugin;
 
     private final Map<String, BukkitRunnable> tasks;
 
-    public TaskCounterManager(WhereAreYouGoingPlugin plugin) {
+    public TaskCounterManager(LeapPlugin plugin) {
         this.plugin = plugin;
         this.tasks = new ConcurrentHashMap<>();
     }

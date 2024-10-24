@@ -1,6 +1,6 @@
 package fr.army.leap.command;
 
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 import fr.army.leap.database.repository.RepositoryProvider;
 import org.bukkit.command.CommandSender;
 
@@ -8,10 +8,10 @@ import java.util.List;
 
 public abstract class SubCommand {
 
-    protected final WhereAreYouGoingPlugin plugin;
+    protected final LeapPlugin plugin;
     protected final RepositoryProvider repositoryProvider;
 
-    public SubCommand(WhereAreYouGoingPlugin plugin) {
+    public SubCommand(LeapPlugin plugin) {
         this.plugin = plugin;
         this.repositoryProvider = plugin.getRepositoryProvider();
     }

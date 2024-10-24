@@ -1,6 +1,6 @@
 package fr.army.leap.utils.network.task.counter;
 
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 import fr.army.leap.cache.impl.ServerCache;
 import fr.army.leap.config.Config;
 import fr.army.leap.config.DestinationServer;
@@ -15,10 +15,10 @@ import java.util.Map;
 
 public class ReceiveCounterRunnable implements Runnable {
 
-    private final WhereAreYouGoingPlugin plugin;
+    private final LeapPlugin plugin;
     private final byte[] data;
 
-    public ReceiveCounterRunnable(WhereAreYouGoingPlugin plugin, byte[] data) {
+    public ReceiveCounterRunnable(LeapPlugin plugin, byte[] data) {
         this.plugin = plugin;
         this.data = data;
     }

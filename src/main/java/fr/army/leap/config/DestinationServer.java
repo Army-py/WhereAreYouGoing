@@ -1,6 +1,6 @@
 package fr.army.leap.config;
 
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 import fr.army.leap.cache.impl.ServerCache;
 import fr.army.leap.database.model.impl.ServerModel;
 import fr.army.leap.database.repository.callback.AsyncCallBackObject;
@@ -21,8 +21,8 @@ public class DestinationServer {
         this.maxPlayers = maxPlayers;
         this.destinationProtocol = destinationProtocol;
 
-        this.serverRepository = WhereAreYouGoingPlugin.getPlugin().getRepositoryProvider().getRepository(ServerRepository.class);
-        this.serverCache = WhereAreYouGoingPlugin.getPlugin().getCacheProvider().getCache(ServerCache.class);
+        this.serverRepository = LeapPlugin.getPlugin().getRepositoryProvider().getRepository(ServerRepository.class);
+        this.serverCache = LeapPlugin.getPlugin().getCacheProvider().getCache(ServerCache.class);
     }
 
     public void setMaintenance(AsyncCallBackObject<ServerModel> asyncCallBackObject) {

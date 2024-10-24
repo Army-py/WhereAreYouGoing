@@ -1,6 +1,6 @@
 package fr.army.leap.config;
 
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 import fr.army.leap.menu.button.ButtonItem;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -9,7 +9,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class DestinationSelector {
 
-    public static final String SELECTOR_IDENTIFIER = "wayg_destination_selector";
+    public static final String SELECTOR_IDENTIFIER = "leap_destination_selector";
 
     private final ButtonItem buttonItem;
     private final int slot;
@@ -34,7 +34,7 @@ public class DestinationSelector {
         if (itemMeta == null) return false;
 
         return itemMeta.getPersistentDataContainer().has(
-                new NamespacedKey(WhereAreYouGoingPlugin.getPlugin(), "identifier"),
+                new NamespacedKey(LeapPlugin.getPlugin(), "identifier"),
                 PersistentDataType.STRING
         );
     }

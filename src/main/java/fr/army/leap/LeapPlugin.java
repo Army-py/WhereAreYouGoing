@@ -26,9 +26,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
 
-public final class WhereAreYouGoingPlugin extends JavaPlugin {
+public final class LeapPlugin extends JavaPlugin {
 
-    public static WhereAreYouGoingPlugin plugin;
+    public static LeapPlugin plugin;
 
     private LibrarySetup librarySetup;
     private ExternalManager externalManager;
@@ -136,7 +136,7 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
             taskCounterManager.startTaskCounterChecker(serverName);
         }
 
-        getLogger().info("WhereAreYouGoingPlugin enabled");
+        getLogger().info("Leap enabled");
     }
 
     @Override
@@ -148,10 +148,10 @@ public final class WhereAreYouGoingPlugin extends JavaPlugin {
             externalManager.unload();
         }
 
-        getLogger().info("WhereAreYouGoingPlugin disabled");
+        getLogger().info("Leap disabled");
     }
 
-    public static WhereAreYouGoingPlugin getPlugin() {
+    public static LeapPlugin getPlugin() {
         return plugin;
     }
 

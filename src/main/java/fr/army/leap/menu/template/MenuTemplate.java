@@ -1,6 +1,6 @@
 package fr.army.leap.menu.template;
 
-import fr.army.leap.menu.WAYGMenu;
+import fr.army.leap.menu.LeapMenu;
 import fr.army.leap.menu.button.Button;
 import fr.army.leap.menu.button.ComponentButton;
 import fr.army.leap.menu.button.template.ButtonTemplate;
@@ -18,7 +18,7 @@ public class MenuTemplate<T extends AbstractMenuView<T>> {
     private final int size;
     private final Button<T>[] buttons;
 
-    private WAYGMenu<T> precedingMenu;
+    private LeapMenu<T> precedingMenu;
 
     public MenuTemplate(@NotNull String title, boolean precede, int size) {
         this.title = title;
@@ -107,11 +107,11 @@ public class MenuTemplate<T extends AbstractMenuView<T>> {
     }
 
     @Nullable
-    public WAYGMenu<T> getPrecedingMenu() {
+    public LeapMenu<T> getPrecedingMenu() {
         return precedingMenu;
     }
 
-    public void setPrecedingMenu(@NotNull WAYGMenu<T> precedingMenu) {
+    public void setPrecedingMenu(@NotNull LeapMenu<T> precedingMenu) {
         this.precedingMenu = precedingMenu;
     }
 }

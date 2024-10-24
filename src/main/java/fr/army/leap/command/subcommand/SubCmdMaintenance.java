@@ -1,6 +1,6 @@
 package fr.army.leap.command.subcommand;
 
-import fr.army.leap.WhereAreYouGoingPlugin;
+import fr.army.leap.LeapPlugin;
 import fr.army.leap.command.SubCommand;
 import fr.army.leap.config.Config;
 import fr.army.leap.config.message.Messages;
@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 
 public class SubCmdMaintenance extends SubCommand {
 
-    public SubCmdMaintenance(WhereAreYouGoingPlugin plugin) {
+    public SubCmdMaintenance(LeapPlugin plugin) {
         super(plugin);
     }
 
@@ -84,6 +84,6 @@ public class SubCmdMaintenance extends SubCommand {
 
     @Override
     public String getPermission() {
-        return "wayg.maintenance";
+        return "leap.maintenance";
     }
 }
