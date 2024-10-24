@@ -14,7 +14,7 @@ public class LibrarySetup {
     private final BukkitLibraryManager bukkitLibraryManager;
 
     public LibrarySetup(LeapPlugin plugin) {
-        this.bukkitLibraryManager = new BukkitLibraryManager(plugin);
+        this.bukkitLibraryManager = new BukkitLibraryManager(plugin, "libs", new LibrairyLogger());
     }
 
     public List<Library> initLibraries() {

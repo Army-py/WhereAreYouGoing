@@ -4,6 +4,7 @@ import fr.army.leap.LeapPlugin;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 public class DatabaseTask implements Runnable {
@@ -24,7 +25,7 @@ public class DatabaseTask implements Runnable {
             databaseOperation.accept(entityManager);
             transaction.commit();
         } catch (Exception e) {
-            LeapPlugin.getPlugin().getLogger().severe("Error while executing database task: " + e.getMessage());
+            LeapPlugin.getPlugin().getLogger().severe("Error while executing database task: " + Arrays.toString(e.getStackTrace()));
         } finally {
             if (entityManager.isOpen()) {
                 entityManager.close();
