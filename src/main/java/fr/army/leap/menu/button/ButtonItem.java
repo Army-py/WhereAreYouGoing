@@ -116,6 +116,8 @@ public class ButtonItem {
         if (identifier != null)
             itemBuilder.setPersistentData("identifier", identifier);
 
-        return itemBuilder.buildItem();
+        return itemBuilder
+                .hideItemAttributes()
+                .buildItem();
     }
 }
